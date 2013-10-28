@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Recipe Book</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Recipe Book</string>
+    <string name="new_recipe">New Recipe</string>
+    <string name="view_recipes">View Recipes</string>
+    <string name="title_activity_add_ingredients">Add Ingredients</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="ingredient_hint">New Ingredient...</string>
+    <string name="add_ingredient">Add Ingredient</string>
+    <string name="next">Next</string>
+    <string name="plus_sign">+</string>
+
+</resources>

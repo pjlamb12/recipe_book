@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/title_string"
+        style="@style/header_string"
+        android:text="@string/title" />
+
+    <Button
+        android:id="@+id/new_recipe"
+        style="@style/buttonStyle"
+        android:text="@string/new_recipe"
+        android:onClick="newRecipe" />
+
+    <Button
+        android:id="@+id/view_recipes"
+        style="@style/buttonStyle"
+        android:text="@string/view_recipes" />
+
+</LinearLayout>
