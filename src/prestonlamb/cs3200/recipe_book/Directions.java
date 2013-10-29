@@ -1,11 +1,12 @@
 package prestonlamb.cs3200.recipe_book;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Directions {
-	ArrayList<String> directions;
+	List<String> directions = new ArrayList<String>();
 
-	public ArrayList<String> getDirections() {
+	public List<String> getDirections() {
 		return directions;
 	}
 	
@@ -13,7 +14,7 @@ public class Directions {
 		return directions.get(index);
 	}
 
-	public void setDirections(ArrayList<String> directions) {
+	public void setDirections(List<String> directions) {
 		this.directions = directions;
 	}
 	

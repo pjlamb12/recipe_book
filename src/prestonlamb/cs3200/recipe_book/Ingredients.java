@@ -1,12 +1,13 @@
 package prestonlamb.cs3200.recipe_book;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Ingredients {
 
-	ArrayList<String> ingredients = new ArrayList<String>();
+	List<String> ingredients = new ArrayList<String>();
 
-	public ArrayList<String> getIngredients() {
+	public List<String> getIngredients() {
 		return ingredients;
 	}
 	
@@ -14,7 +15,7 @@ public class Ingredients {
 		return ingredients.get(index);
 	}
 
-	public void setIngredients(ArrayList<String> ingredients) {
+	public void setIngredients(List<String> ingredients) {
 		this.ingredients = ingredients;
 	}
 	

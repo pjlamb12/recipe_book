@@ -27,8 +27,8 @@ public final class R {
         public static final int action_settings=0x7f080008;
         public static final int add_ingredient=0x7f080001;
         public static final int enter_ingredient=0x7f080000;
-        public static final int ingredient_layout=0x7f080007;
         public static final int ingredient_list=0x7f080002;
+        public static final int ingredient_text_view=0x7f080007;
         public static final int new_recipe=0x7f080005;
         public static final int next_directions=0x7f080003;
         public static final int title_string=0x7f080004;

@@ -1,12 +1,21 @@
 package prestonlamb.cs3200.recipe_book;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Recipe {
 
 	Ingredients ingredients;
 	Directions directions;
+	String recipeName;
 	
+	public String getRecipeName() {
+		return recipeName;
+	}
+
+	public void setRecipeName(String recipeName) {
+		this.recipeName = recipeName;
+	}
+
 	public String getIngredient(int index){	
 		return ingredients.getSingleIngredient(index);
 	}
@@ -17,7 +26,7 @@ public class Recipe {
 	
 	public String getIngredients(){
 		StringBuilder ingredientList = new StringBuilder();
-		ArrayList<String> theIngredients = ingredients.getIngredients();
+		List<String> theIngredients = ingredients.getIngredients();
 		
 		for(String ingredient : theIngredients){
 			ingredientList.append(ingredient);
@@ -29,7 +38,7 @@ public class Recipe {
 	
 	public String getDirections(){
 		StringBuilder directionList = new StringBuilder();
-		ArrayList<String> theDirections = directions.getDirections();
+		List<String> theDirections = directions.getDirections();
 		
 		for(String direction : theDirections){
 			directionList.append(direction);

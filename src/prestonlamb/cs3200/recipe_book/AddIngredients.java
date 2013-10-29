@@ -13,7 +13,7 @@ import android.support.v4.app.NavUtils;
 public class AddIngredients extends Activity {
 
 	Ingredients ingredients = new Ingredients();
-	
+	IngredientArrayAdapter adptr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,7 +22,7 @@ public class AddIngredients extends Activity {
 		setupActionBar();
 		ingredients.addSingleIngredient("There are no ingredients yet...");
 		
-		IngredientArrayAdapter adptr = new IngredientArrayAdapter(this, R.id.ingredient_layout, ingredients);
+		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, ingredients);
 		ListView list = (ListView)findViewById(R.id.ingredient_list);
 		list.setAdapter(adptr);
 	}
@@ -38,9 +38,7 @@ public class AddIngredients extends Activity {
 		String ingredient = enterIngredient.getText().toString();
 		System.out.println(ingredient);
 		ingredients.addSingleIngredient(ingredient);
-		IngredientArrayAdapter adptr = new IngredientArrayAdapter(this, R.id.ingredient_layout, ingredients);
-		ListView list = (ListView)findViewById(R.id.ingredient_list);
-		list.setAdapter(adptr);
+		adptr.notifyDataSetChanged();
 		
 		Toast.makeText(getApplicationContext(), "add ingredient", Toast.LENGTH_LONG).show();
 	}

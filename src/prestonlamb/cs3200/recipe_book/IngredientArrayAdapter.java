@@ -36,7 +36,7 @@ public class IngredientArrayAdapter extends ArrayAdapter<Ingredients> {
 			layout = (RelativeLayout)convertView;
 		}
 		
-		((TextView) layout.findViewById(R.id.ingredient_layout)).setText(selected_ingredient.toString());
+		((TextView) layout.findViewById(R.id.ingredient_text_view)).setText(selected_ingredient.toString());
 		
 		return layout;
 	}
