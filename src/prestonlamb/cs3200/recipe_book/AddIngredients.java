@@ -2,6 +2,8 @@ package prestonlamb.cs3200.recipe_book;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +16,7 @@ import android.support.v4.app.NavUtils;
 
 public class AddIngredients extends Activity {
 
-	Ingredients ingredients = new Ingredients();
+	Recipe recipe = new Recipe();
 	IngredientArrayAdapter adptr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +24,9 @@ public class AddIngredients extends Activity {
 		setContentView(R.layout.activity_add_ingredients);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		ingredients.addSingleIngredient("There are no ingredients yet...");
-		
-		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, ingredients.getIngredients());
+
+		recipe.addSingleIngredient("There are no ingredients yet...");
+		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, recipe.getAllIngredients());
 		ListView listView = (ListView)findViewById(R.id.ingredient_list);
 		listView.setAdapter(adptr);
 		
@@ -43,7 +45,7 @@ public class AddIngredients extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				showDeletionDialog(position);
 				return false;
 			}
 			
@@ -51,16 +53,39 @@ public class AddIngredients extends Activity {
 		
 	}
 	
+	public void showDeletionDialog(final int listItem){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.delete_ingredient_dialog_desc);
+		builder.setTitle(R.string.delete_ingredient_dialog_title);
+		builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				recipe.deleteSingleIngredient(listItem);
+				adptr.notifyDataSetChanged();
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Do nothing on the cancel
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+
+	}
+	
 	public void addIngredient(View v){
-		if (ingredients.getIngredients().size() == 1){
-			String theIngredient = ingredients.getSingleIngredient(0);
+		if (recipe.getIngredientsSize() == 1){
+			String theIngredient = recipe.getSingleIngredient(0);
 			if(theIngredient.contains("There are no ingredients")){
-				ingredients.removeSingleIngredient(0);
+				recipe.deleteSingleIngredient(0);
 			}
 		}
 		EditText enterIngredient = (EditText) findViewById(R.id.enter_ingredient);
 		String ingredient = enterIngredient.getText().toString();
-		ingredients.addSingleIngredient(ingredient);
+		recipe.addSingleIngredient(ingredient);
 		adptr.notifyDataSetChanged();
 		enterIngredient.setText("");
 	}

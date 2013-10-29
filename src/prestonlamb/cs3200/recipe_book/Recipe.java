@@ -1,12 +1,13 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe {
 
-	Ingredients ingredients;
-	Directions directions;
 	String recipeName;
+	List<String> ingredients = new ArrayList<String>();
+	List<String> directions = new ArrayList<String>();
 	
 	public String getRecipeName() {
 		return recipeName;
@@ -16,59 +17,60 @@ public class Recipe {
 		this.recipeName = recipeName;
 	}
 
-	public String getIngredient(int index){	
-		return ingredients.getSingleIngredient(index);
+	public List<String> getAllIngredients() {
+		return ingredients;
 	}
 	
-	public String getDirection(int index){
-		return directions.getSingleDirection(index);
+	public String getSingleIngredient(int index){
+		return ingredients.get(index);
+	}
+
+	public void setAllIngredients(List<String> ingredients1) {
+		this.ingredients = ingredients1;
 	}
 	
-	public String getIngredients(){
-		StringBuilder ingredientList = new StringBuilder();
-		List<String> theIngredients = ingredients.getIngredients();
-		
-		for(String ingredient : theIngredients){
-			ingredientList.append(ingredient);
-			ingredientList.append("\n");
-		}
-		
-		return ingredientList.toString();
+	public void addSingleIngredient(String ingredient){
+		ingredients.add(ingredient);
 	}
 	
-	public String getDirections(){
-		StringBuilder directionList = new StringBuilder();
-		List<String> theDirections = directions.getDirections();
-		
-		for(String direction : theDirections){
-			directionList.append(direction);
-			directionList.append("\n");
-		}
-		
-		return directionList.toString();
+	public void deleteSingleIngredient(int index){
+		ingredients.remove(index);
 	}
 	
-	public void addIngredient(String ingredient){
-		ingredients.addSingleIngredient(ingredient);
+	public void deleteAllIngredients(){
+		ingredients.clear();
 	}
 	
-	public void setIngredients(Ingredients ingredients){
-		this.ingredients = ingredients;
+	public int getIngredientsSize(){
+		return ingredients.size();
+	}
+
+	public List<String> getAllDirections() {
+		return directions;
+	}
+
+	public String getSingleDirection(int index){
+		return directions.get(index);
+	}
+
+	public void setDirections(List<String> directions1) {
+		this.directions = directions1;
 	}
 	
-	public void deleteIngredient(int index){
-		ingredients.removeSingleIngredient(index);
+	public void addSingleDirection(String direction){
+		directions.add(direction);
 	}
 	
-	public void addDirection(String direction){
-		directions.addSingleDirection(direction);
+	public void deleteSingleDirection(int index){
+		directions.remove(index);
 	}
 	
-	public void setDirections(Directions directions){
-		this.directions = directions;
+	public void deleteAllDirections(){
+		directions.clear();
 	}
 	
-	public void deleteDirection(int index){
-		directions.removeSingleDirection(index);
+	public int getDirectionsSize(){
+		return directions.size();
 	}
+
 }

@@ -47,6 +47,10 @@ public final class R {
         public static final int action_settings=0x7f050001;
         public static final int add_ingredient=0x7f050008;
         public static final int app_name=0x7f050000;
+        public static final int cancel=0x7f05000b;
+        public static final int delete=0x7f05000c;
+        public static final int delete_ingredient_dialog_desc=0x7f05000e;
+        public static final int delete_ingredient_dialog_title=0x7f05000d;
         public static final int hello_world=0x7f050006;
         public static final int ingredient_hint=0x7f050007;
         public static final int new_recipe=0x7f050003;
