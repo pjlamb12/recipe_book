@@ -22,7 +22,7 @@ public class AddIngredients extends Activity {
 		setupActionBar();
 		ingredients.addSingleIngredient("There are no ingredients yet...");
 		
-		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, ingredients);
+		adptr = new IngredientArrayAdapter(this, R.layout.ingredient_layout, R.id.ingredient_text_view, ingredients);
 		ListView list = (ListView)findViewById(R.id.ingredient_list);
 		list.setAdapter(adptr);
 	}

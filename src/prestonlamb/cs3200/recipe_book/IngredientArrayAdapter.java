@@ -10,15 +10,17 @@ import android.widget.TextView;
 
 public class IngredientArrayAdapter extends ArrayAdapter<Ingredients> {
 	
-	Context con;
-	int resID;
-	Ingredients ingredients;
+	private Context con;
+	private int resID;
+	private int textViewId;
+	private Ingredients ingredients;
 
-	public IngredientArrayAdapter(Context context, int resource, Ingredients objects) {
+	public IngredientArrayAdapter(Context context, int resource, int textViewId, Ingredients objects) {
 		super(context, resource);
 		
 		con = context;
 		resID = resource;
+		this.textViewId = textViewId;
 		ingredients = objects;
 	}
 
