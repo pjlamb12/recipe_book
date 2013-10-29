@@ -1,46 +1,40 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class IngredientArrayAdapter extends ArrayAdapter<Ingredients> {
+public class IngredientArrayAdapter extends ArrayAdapter<String> {
 	
-	private Context con;
-	private int resID;
-	private int textViewId;
-	private Ingredients ingredients;
+//	private Context context;
+//	private int resID;
 
-	public IngredientArrayAdapter(Context context, int resource, int textViewId, Ingredients objects) {
-		super(context, resource);
+	public IngredientArrayAdapter(Context context, int resource, List<String> objects) {
+		super(context, resource, objects);
 		
-		con = context;
-		resID = resource;
-		this.textViewId = textViewId;
-		ingredients = objects;
+//		this.context = context;
+//		resID = resource;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent){
 
-		RelativeLayout layout;
-		Ingredients selected_ingredient = getItem(position);
+		View view = convertView;
+		String selected_ingredient = getItem(position);
 		
-		if(convertView == null){
-			layout = new RelativeLayout(getContext());
+		if(view == null){
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater vi = (LayoutInflater)getContext().getSystemService(inflater);
-			vi.inflate(resID, layout, true);
-		} else {
-			layout = (RelativeLayout)convertView;
+			view = vi.inflate(R.layout.ingredient_layout, null);
 		}
+		TextView itemView = (TextView) view.findViewById(R.id.ingredient_text_view);
+		itemView.setText(selected_ingredient);
 		
-		((TextView) layout.findViewById(R.id.ingredient_text_view)).setText(selected_ingredient.toString());
-		
-		return layout;
+		return view;
 	}
 	
 	

@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
 public class AddIngredients extends Activity {
@@ -22,9 +24,31 @@ public class AddIngredients extends Activity {
 		setupActionBar();
 		ingredients.addSingleIngredient("There are no ingredients yet...");
 		
-		adptr = new IngredientArrayAdapter(this, R.layout.ingredient_layout, R.id.ingredient_text_view, ingredients);
-		ListView list = (ListView)findViewById(R.id.ingredient_list);
-		list.setAdapter(adptr);
+		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, ingredients.getIngredients());
+		ListView listView = (ListView)findViewById(R.id.ingredient_list);
+		listView.setAdapter(adptr);
+		
+		listView.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+		});
+		
 	}
 	
 	public void addIngredient(View v){
@@ -36,11 +60,9 @@ public class AddIngredients extends Activity {
 		}
 		EditText enterIngredient = (EditText) findViewById(R.id.enter_ingredient);
 		String ingredient = enterIngredient.getText().toString();
-		System.out.println(ingredient);
 		ingredients.addSingleIngredient(ingredient);
 		adptr.notifyDataSetChanged();
-		
-		Toast.makeText(getApplicationContext(), "add ingredient", Toast.LENGTH_LONG).show();
+		enterIngredient.setText("");
 	}
 
 	/**
