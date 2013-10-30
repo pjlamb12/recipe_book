@@ -13,6 +13,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.support.v4.app.NavUtils;
+import android.text.InputType;
 
 public class AddIngredients extends Activity {
 
@@ -33,24 +34,52 @@ public class AddIngredients extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position,
-					long id) {
-				// TODO Auto-generated method stub
-				
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				showEditIngredientDialog(position);
 			}
 		});
 		
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				showDeletionDialog(position);
 				return false;
 			}
 			
 		});
 		
+	}
+	
+	public void showEditIngredientDialog(final int listItem){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Edit Ingredient");
+		final EditText editInput = new EditText(this);
+		editInput.setText(recipe.getSingleIngredient(listItem));
+		editInput.setInputType(InputType.TYPE_CLASS_TEXT);
+		builder.setView(editInput);
+		builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String editedIngredient = editInput.getText().toString();
+				recipe.deleteSingleIngredient(listItem);
+				recipe.addSingleIngredient(editedIngredient);
+				adptr.notifyDataSetChanged();
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Do nothing on the cancel
+				dialog.cancel();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
 	}
 	
 	public void showDeletionDialog(final int listItem){
@@ -62,6 +91,7 @@ public class AddIngredients extends Activity {
 			public void onClick(DialogInterface dialog, int which) {
 				recipe.deleteSingleIngredient(listItem);
 				adptr.notifyDataSetChanged();
+				dialog.dismiss();
 			}
 		});
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -69,6 +99,7 @@ public class AddIngredients extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 //				Do nothing on the cancel
+				dialog.cancel();
 			}
 		});
 		AlertDialog alert = builder.create();
