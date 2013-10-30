@@ -26,10 +26,14 @@
     <string name="title_activity_add_directions">Add Directions</string>
     <string name="direction_required">You need to first add a direction.</string>
     <string name="ingredient_required">You need to first add an ingredient.</string>
-    <string name="name_recipe">Name Recipe</string>
-    <string name="edit_name">Edit Recipe Name</string>
+    <string name="name_hint">Recipe Name&#8230;</string>
     <string name="name_required">You need to first add a recipe name.</string>
     <string name="continue_tag">Continue</string>
     <string name="finish">Finish</string>
+    <string name="title_activity_name_recipe">Name Recipe</string>
+    <string name="appetizer_radio">Appetizer</string>
+    <string name="entree_radio">Entree</string>
+    <string name="soup_radio">Soup</string>
+    <string name="dessert_radio">Dessert</string>
 
 </resources>

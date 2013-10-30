@@ -20,7 +20,7 @@ import android.text.InputType;
 
 public class AddIngredients extends Activity {
 
-	Recipe recipe = new Recipe();
+	Recipe recipe;
 	IngredientArrayAdapter adptr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,10 @@ public class AddIngredients extends Activity {
 		setContentView(R.layout.activity_add_ingredients);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		nameRecipeDialog();
 
+		Intent intent = getIntent();
+		recipe = intent.getParcelableExtra("Recipe");
+		
 		recipe.addSingleIngredient("There are no ingredients yet...");
 		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, recipe.getAllIngredients());
 		ListView listView = (ListView)findViewById(R.id.ingredient_list);
@@ -54,45 +56,6 @@ public class AddIngredients extends Activity {
 		});
 		
 	}
-	
-	public void nameRecipeDialog(){
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Name Recipe");
-		final EditText editInput = new EditText(this);
-		editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-		builder.setView(editInput);
-		builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				recipe.setRecipeName(editInput.getText().toString());
-				dialog.dismiss();
-			}
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-	
-	public void editRecipeNameDialog(View v){
-		
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.name_recipe);
-		final EditText editInput = new EditText(this);
-		editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
-		builder.setView(editInput);
-		builder.setPositiveButton(R.string.continue_tag, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				recipe.setRecipeName(editInput.getText().toString());
-				dialog.dismiss();
-			}
-		});
-		AlertDialog alert = builder.create();
-		alert.show();
-	}
-
 	
 	public void showEditIngredientDialog(final int listItem){
 		
@@ -170,13 +133,9 @@ public class AddIngredients extends Activity {
 
 	
 	public void nextDirections(View v){
-		if(recipe.getRecipeName() == null){
-			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();
-		} else {
-			Intent intent = new Intent(getApplicationContext(), AddDirections.class);
-			intent.putExtra("Recipe", (Parcelable)recipe);
-			startActivity(intent);
-		}
+		Intent intent = new Intent(getApplicationContext(), AddDirections.class);
+		intent.putExtra("Recipe", (Parcelable)recipe);
+		startActivity(intent);
 	}
 	
 	/**

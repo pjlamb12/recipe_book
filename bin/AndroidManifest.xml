@@ -25,7 +25,7 @@
         <activity
             android:name="prestonlamb.cs3200.recipe_book.AddIngredients"
             android:label="@string/title_activity_add_ingredients"
-            android:parentActivityName="prestonlamb.cs3200.recipe_book.Home" >
+            android:parentActivityName="prestonlamb.cs3200.recipe_book.NameRecipe" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="prestonlamb.cs3200.recipe_book.Home" />
@@ -37,6 +37,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="prestonlamb.cs3200.recipe_book.AddIngredients" />
+        </activity>
+        <activity
+            android:name="prestonlamb.cs3200.recipe_book.NameRecipe"
+            android:label="@string/title_activity_name_recipe"
+            android:parentActivityName="prestonlamb.cs3200.recipe_book.Home" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="prestonlamb.cs3200.recipe_book.Home" />
         </activity>
     </application>
 

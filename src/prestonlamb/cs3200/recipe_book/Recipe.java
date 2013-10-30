@@ -11,6 +11,7 @@ public class Recipe implements Parcelable, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	String recipeName;
+	String category;
 	List<String> ingredients;
 	List<String> directions;
 	
@@ -25,6 +26,14 @@ public class Recipe implements Parcelable, Serializable {
 
 	public void setRecipeName(String recipeName) {
 		this.recipeName = recipeName;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public List<String> getAllIngredients() {

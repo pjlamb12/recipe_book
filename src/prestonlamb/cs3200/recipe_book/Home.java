@@ -27,7 +27,7 @@ public class Home extends Activity {
 	}
 	
 	public void newRecipe(View v){
-		Intent intent = new Intent(getApplicationContext(), AddIngredients.class);
+		Intent intent = new Intent(getApplicationContext(), NameRecipe.class);
 		startActivity(intent);
 	}
 	
