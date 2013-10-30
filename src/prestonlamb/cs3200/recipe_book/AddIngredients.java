@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 import android.text.InputType;
 
@@ -25,6 +27,7 @@ public class AddIngredients extends Activity {
 		setContentView(R.layout.activity_add_ingredients);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		nameRecipeDialog();
 
 		recipe.addSingleIngredient("There are no ingredients yet...");
 		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, recipe.getAllIngredients());
@@ -50,6 +53,45 @@ public class AddIngredients extends Activity {
 		});
 		
 	}
+	
+	public void nameRecipeDialog(){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Name Recipe");
+		final EditText editInput = new EditText(this);
+		editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+		builder.setView(editInput);
+		builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				recipe.setRecipeName(editInput.getText().toString());
+				dialog.dismiss();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void editRecipeNameDialog(View v){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Name Recipe");
+		final EditText editInput = new EditText(this);
+		editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+		builder.setView(editInput);
+		builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				recipe.setRecipeName(editInput.getText().toString());
+				dialog.dismiss();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+
 	
 	public void showEditIngredientDialog(final int listItem){
 		
@@ -121,6 +163,17 @@ public class AddIngredients extends Activity {
 		enterIngredient.setText("");
 	}
 
+	
+	public void nextDirections(View v){
+		if(recipe.getRecipeName() == null){
+			Toast.makeText(getApplicationContext(), "You must enter a recipe name first", Toast.LENGTH_LONG).show();
+		} else {
+			Intent intent = new Intent(getApplicationContext(), AddDirections.class);
+			intent.putExtra("Recipe", recipe);
+			startActivity(intent);
+		}
+	}
+	
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */

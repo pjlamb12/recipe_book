@@ -24,24 +24,31 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080008;
-        public static final int add_ingredient=0x7f080001;
-        public static final int enter_ingredient=0x7f080000;
-        public static final int ingredient_list=0x7f080002;
-        public static final int ingredient_text_view=0x7f080007;
-        public static final int new_recipe=0x7f080005;
-        public static final int next_directions=0x7f080003;
-        public static final int title_string=0x7f080004;
-        public static final int view_recipes=0x7f080006;
+        public static final int action_settings=0x7f08000d;
+        public static final int add_direction=0x7f080001;
+        public static final int add_ingredient=0x7f080005;
+        public static final int direcion_list=0x7f080002;
+        public static final int edit_recipe_name=0x7f080008;
+        public static final int enter_direction=0x7f080000;
+        public static final int enter_ingredient=0x7f080004;
+        public static final int finish=0x7f080003;
+        public static final int ingredient_list=0x7f080006;
+        public static final int ingredient_text_view=0x7f08000c;
+        public static final int new_recipe=0x7f08000a;
+        public static final int next_directions=0x7f080007;
+        public static final int title_string=0x7f080009;
+        public static final int view_recipes=0x7f08000b;
     }
     public static final class layout {
-        public static final int activity_add_ingredients=0x7f030000;
-        public static final int activity_home=0x7f030001;
-        public static final int ingredient_layout=0x7f030002;
+        public static final int activity_add_directions=0x7f030000;
+        public static final int activity_add_ingredients=0x7f030001;
+        public static final int activity_home=0x7f030002;
+        public static final int ingredient_layout=0x7f030003;
     }
     public static final class menu {
-        public static final int add_ingredients=0x7f070000;
-        public static final int home=0x7f070001;
+        public static final int add_directions=0x7f070000;
+        public static final int add_ingredients=0x7f070001;
+        public static final int home=0x7f070002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -57,6 +64,7 @@ public final class R {
         public static final int next=0x7f050009;
         public static final int plus_sign=0x7f05000a;
         public static final int title=0x7f050002;
+        public static final int title_activity_add_directions=0x7f05000f;
         public static final int title_activity_add_ingredients=0x7f050005;
         public static final int view_recipes=0x7f050004;
     }

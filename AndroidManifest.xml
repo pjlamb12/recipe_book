@@ -30,6 +30,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="prestonlamb.cs3200.recipe_book.Home" />
         </activity>
+        <activity
+            android:name="prestonlamb.cs3200.recipe_book.AddDirections"
+            android:label="@string/title_activity_add_directions"
+            android:parentActivityName="prestonlamb.cs3200.recipe_book.AddIngredients" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="prestonlamb.cs3200.recipe_book.AddIngredients" />
+        </activity>
     </application>
 
 </manifest>

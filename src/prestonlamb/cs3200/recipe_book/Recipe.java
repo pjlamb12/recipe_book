@@ -3,11 +3,19 @@ package prestonlamb.cs3200.recipe_book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Recipe {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Recipe implements Parcelable {
 
 	String recipeName;
-	List<String> ingredients = new ArrayList<String>();
-	List<String> directions = new ArrayList<String>();
+	List<String> ingredients;
+	List<String> directions;
+	
+	public Recipe(){
+		ingredients = new ArrayList<String>();
+		directions = new ArrayList<String>();
+	}
 	
 	public String getRecipeName() {
 		return recipeName;
@@ -72,5 +80,37 @@ public class Recipe {
 	public int getDirectionsSize(){
 		return directions.size();
 	}
+
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(recipeName);
+		dest.writeStringList(ingredients);
+		dest.writeStringList(directions);
+	}
+	
+	public Recipe(Parcel parcel){
+		recipeName = parcel.readString();
+		parcel.writeStringList(ingredients);
+		parcel.writeStringList(directions);
+	}
+	
+	public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+
+		@Override
+		public Recipe createFromParcel(Parcel source) {
+			return new Recipe(source);
+		}
+
+		@Override
+		public Recipe[] newArray(int size) {
+			return new Recipe[size];
+		}
+	};
 
 }
