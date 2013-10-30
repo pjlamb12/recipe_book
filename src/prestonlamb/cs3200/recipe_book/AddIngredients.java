@@ -76,11 +76,11 @@ public class AddIngredients extends Activity {
 	public void editRecipeNameDialog(View v){
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Name Recipe");
+		builder.setTitle(R.string.name_recipe);
 		final EditText editInput = new EditText(this);
 		editInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
 		builder.setView(editInput);
-		builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(R.string.continue_tag, new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -96,12 +96,12 @@ public class AddIngredients extends Activity {
 	public void showEditIngredientDialog(final int listItem){
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Edit Ingredient");
+		builder.setTitle(R.string.edit_ingredient);
 		final EditText editInput = new EditText(this);
 		editInput.setText(recipe.getSingleIngredient(listItem));
 		editInput.setInputType(InputType.TYPE_CLASS_TEXT);
 		builder.setView(editInput);
-		builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton(R.string.Update, new DialogInterface.OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -150,23 +150,27 @@ public class AddIngredients extends Activity {
 	}
 	
 	public void addIngredient(View v){
-		if (recipe.getIngredientsSize() == 1){
-			String theIngredient = recipe.getSingleIngredient(0);
-			if(theIngredient.contains("There are no ingredients")){
-				recipe.deleteSingleIngredient(0);
-			}
-		}
 		EditText enterIngredient = (EditText) findViewById(R.id.enter_ingredient);
 		String ingredient = enterIngredient.getText().toString();
-		recipe.addSingleIngredient(ingredient);
-		adptr.notifyDataSetChanged();
-		enterIngredient.setText("");
+		if(ingredient.length() != 0){			
+			if (recipe.getIngredientsSize() == 1){
+				String theIngredient = recipe.getSingleIngredient(0);
+				if(theIngredient.contains("There are no ingredients")){
+					recipe.deleteSingleIngredient(0);
+				}
+			}
+			recipe.addSingleIngredient(ingredient);
+			adptr.notifyDataSetChanged();
+			enterIngredient.setText("");
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.ingredient_required, Toast.LENGTH_LONG).show();
+		}
 	}
 
 	
 	public void nextDirections(View v){
 		if(recipe.getRecipeName() == null){
-			Toast.makeText(getApplicationContext(), "You must enter a recipe name first", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();
 		} else {
 			Intent intent = new Intent(getApplicationContext(), AddDirections.class);
 			intent.putExtra("Recipe", recipe);

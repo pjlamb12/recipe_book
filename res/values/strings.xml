@@ -10,12 +10,26 @@
     <string name="hello_world">Hello world!</string>
     <string name="ingredient_hint">New Ingredient&#8230;</string>
     <string name="add_ingredient">Add Ingredient</string>
+    <string name="direction_hint">New Direction&#8230;</string>
+    <string name="add_direction">Add Direction</string>
     <string name="next">Next</string>
     <string name="plus_sign">+</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="Update">Update</string>
+    <string name="edit_ingredient">Edit Ingredient</string>
+    <string name="edit_direction">Edit Direction</string>
     <string name="delete_ingredient_dialog_title">Delete Ingredient</string>
     <string name="delete_ingredient_dialog_desc">Do you want to delete this ingredient?</string>
+    <string name="delete_direction_dialog_title">Delete Direction</string>
+    <string name="delete_direction_dialog_desc">Do you want to delete this direction?</string>
     <string name="title_activity_add_directions">Add Directions</string>
+    <string name="direction_required">You need to first add a direction.</string>
+    <string name="ingredient_required">You need to first add an ingredient.</string>
+    <string name="name_recipe">Name Recipe</string>
+    <string name="edit_name">Edit Recipe Name</string>
+    <string name="name_required">You need to first add a recipe name.</string>
+    <string name="continue_tag">Continue</string>
+    <string name="finish">Finish</string>
 
 </resources>

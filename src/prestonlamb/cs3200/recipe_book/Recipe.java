@@ -83,21 +83,22 @@ public class Recipe implements Parcelable {
 
 	@Override
 	public int describeContents() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(recipeName);
-		dest.writeStringList(ingredients);
-		dest.writeStringList(directions);
+		dest.writeList(ingredients);
+		dest.writeList(directions);
 	}
 	
 	public Recipe(Parcel parcel){
 		recipeName = parcel.readString();
-		parcel.writeStringList(ingredients);
-		parcel.writeStringList(directions);
+		ingredients = new ArrayList<String>();
+		parcel.readList(ingredients, null);
+		directions = new ArrayList<String>();
+		parcel.readList(directions, null);
 	}
 	
 	public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
