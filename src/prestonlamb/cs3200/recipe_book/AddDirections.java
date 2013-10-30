@@ -1,6 +1,7 @@
 package prestonlamb.cs3200.recipe_book;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -133,7 +134,9 @@ public class AddDirections extends Activity {
 	}
 	
 	public void finish(View v){
-		
+		Intent intent = new Intent(getApplicationContext(), Home.class);
+		intent.putExtra("Recipe", (Parcelable)recipe);
+		startActivity(intent);
 	}
 
 	/**

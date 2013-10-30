@@ -1,6 +1,7 @@
 package prestonlamb.cs3200.recipe_book;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -173,7 +174,7 @@ public class AddIngredients extends Activity {
 			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();
 		} else {
 			Intent intent = new Intent(getApplicationContext(), AddDirections.class);
-			intent.putExtra("Recipe", recipe);
+			intent.putExtra("Recipe", (Parcelable)recipe);
 			startActivity(intent);
 		}
 	}

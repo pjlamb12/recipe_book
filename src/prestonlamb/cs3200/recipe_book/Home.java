@@ -1,5 +1,8 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,10 +11,19 @@ import android.view.View;
 
 public class Home extends Activity {
 
+	List<Recipe> recipeList = new ArrayList<Recipe>();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		Intent intent = getIntent();
+		Recipe newRecipe = new Recipe();
+		newRecipe = intent.getParcelableExtra("Recipe");
+		if(newRecipe != null){
+			recipeList.add(newRecipe);			
+		}
 	}
 	
 	public void newRecipe(View v){

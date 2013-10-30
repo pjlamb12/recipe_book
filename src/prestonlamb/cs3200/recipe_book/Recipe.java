@@ -1,13 +1,15 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Recipe implements Parcelable {
+public class Recipe implements Parcelable, Serializable {
 
+	private static final long serialVersionUID = 1L;
 	String recipeName;
 	List<String> ingredients;
 	List<String> directions;
