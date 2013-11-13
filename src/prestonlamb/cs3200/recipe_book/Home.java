@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class Home extends Activity {
 	
 	public void newRecipe(View v){
 		Intent intent = new Intent(getApplicationContext(), NameRecipe.class);
+//		intent.putParcelableArrayListExtra("Recipes", (ArrayList<? extends Parcelable>)recipeList);
 		startActivity(intent);
 	}
 	
