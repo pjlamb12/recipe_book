@@ -100,12 +100,14 @@ public class Recipe implements Parcelable, Serializable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(recipeName);
+		dest.writeString(category);
 		dest.writeList(ingredients);
 		dest.writeList(directions);
 	}
 	
 	public Recipe(Parcel parcel){
 		recipeName = parcel.readString();
+		category = parcel.readString();
 		ingredients = new ArrayList<String>();
 		parcel.readList(ingredients, null);
 		directions = new ArrayList<String>();

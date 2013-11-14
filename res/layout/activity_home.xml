@@ -17,6 +17,7 @@
     <Button
         android:id="@+id/view_recipes"
         style="@style/buttonStyle"
-        android:text="@string/view_recipes" />
+        android:text="@string/view_recipes"
+        android:onClick="viewRecipes" />
 
 </LinearLayout>

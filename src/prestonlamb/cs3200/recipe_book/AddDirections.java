@@ -31,7 +31,10 @@ public class AddDirections extends Activity {
 		setupActionBar();
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra("Recipe");
-		recipe.addSingleDirection("There are no directions yet...");
+		
+		if(recipe.getDirectionsSize() == 0){
+			recipe.addSingleDirection("There are no directions yet...");
+		}
 		
 		ListView listView = (ListView)findViewById(R.id.direcion_list);
 		adptr = new DirectionArrayAdapter(this, R.id.ingredient_text_view, recipe.getAllDirections());
@@ -136,7 +139,8 @@ public class AddDirections extends Activity {
 	public void finish(View v){
 		Intent intent = new Intent(getApplicationContext(), Home.class);
 		intent.putExtra("Recipe", (Parcelable)recipe);
-		startActivity(intent);
+		setResult(Home.RESULT_OK, intent);
+		finish();
 	}
 
 	/**

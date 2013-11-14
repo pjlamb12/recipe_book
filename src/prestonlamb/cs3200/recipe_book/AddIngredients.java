@@ -32,7 +32,9 @@ public class AddIngredients extends Activity {
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra("Recipe");
 		
-		recipe.addSingleIngredient("There are no ingredients yet...");
+		if(recipe.getIngredientsSize() == 0){
+			recipe.addSingleIngredient("There are no ingredients yet...");			
+		}
 		adptr = new IngredientArrayAdapter(this, R.id.ingredient_text_view, recipe.getAllIngredients());
 		ListView listView = (ListView)findViewById(R.id.ingredient_list);
 		listView.setAdapter(adptr);
@@ -135,7 +137,7 @@ public class AddIngredients extends Activity {
 	public void nextDirections(View v){
 		Intent intent = new Intent(getApplicationContext(), AddDirections.class);
 		intent.putExtra("Recipe", (Parcelable)recipe);
-		startActivity(intent);
+		startActivityForResult(intent, Home.DIRECTIONS_REQUEST);
 	}
 	
 	/**
@@ -170,5 +172,14 @@ public class AddIngredients extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+		if(resultCode == Home.RESULT_OK && requestCode == Home.DIRECTIONS_REQUEST){
+			setResult(Home.RESULT_OK, data);
+			finish();
+		}
+	}
+
 
 }

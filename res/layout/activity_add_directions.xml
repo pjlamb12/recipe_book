@@ -14,7 +14,7 @@
 	        android:layout_weight=".85"
 	        android:layout_width="wrap_content"
 	        android:layout_height="match_parent"
-	        android:inputType="text"
+	        android:inputType="textCapSentences"
 	        android:hint="@string/direction_hint"/>
 
 		    <Button

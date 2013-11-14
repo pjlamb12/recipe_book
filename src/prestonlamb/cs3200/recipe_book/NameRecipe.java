@@ -51,7 +51,7 @@ public class NameRecipe extends Activity {
 			
 			Intent intent = new Intent(getApplicationContext(), AddIngredients.class);
 			intent.putExtra("Recipe", (Parcelable)recipe);
-			startActivity(intent);
+			startActivityForResult(intent, Home.INGREDIENTS_REQUEST);
 		} else {
 			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();			
 		}
@@ -89,5 +89,14 @@ public class NameRecipe extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+		if(resultCode == Home.RESULT_OK && requestCode == Home.INGREDIENTS_REQUEST){
+			setResult(Home.RESULT_OK, data);
+			finish();
+		}
+	}
+
 
 }

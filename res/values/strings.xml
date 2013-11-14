@@ -35,5 +35,6 @@
     <string name="entree_radio">Entree</string>
     <string name="soup_radio">Soup</string>
     <string name="dessert_radio">Dessert</string>
+    <string name="title_activity_view_recipes">View Recipes</string>
 
 </resources>
