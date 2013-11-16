@@ -13,6 +13,7 @@ import android.view.View;
 public class Home extends Activity {
 
 	List<Recipe> recipeList = new ArrayList<Recipe>();
+	RecipeDbAdapter dbAdapter = null;
 	public static final int RESULT_BAD = 0;
 	public static final int RESULT_OK = 1;
 	public static final int NAME_REQUEST = 1;
@@ -26,6 +27,17 @@ public class Home extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+
+//		dbAdapter.open();
+//		int numRecords = dbAdapter.numberRecipesInDb();
+//		if(numRecords > 1){
+//			recipeList = dbAdapter.retrieveAllRecipes();				
+//		}
+//		dbAdapter.close();
+
 		Intent intent = getIntent();
 		if(intent.hasExtra(Home.RECIPE_LIST_INTENT)){
 			recipeList = intent.getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
@@ -50,7 +62,10 @@ public class Home extends Activity {
 			if(data.hasExtra("Recipe"));{
 				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
 				if(newRecipe != null){
-					recipeList.add(newRecipe);			
+					recipeList.add(newRecipe);
+					dbAdapter.open();
+					dbAdapter.insertRecipe(newRecipe);
+					dbAdapter.close();
 				}
 			}
 		}
