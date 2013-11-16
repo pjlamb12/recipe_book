@@ -31,12 +31,12 @@ public class Home extends Activity {
 			dbAdapter = new RecipeDbAdapter(this);
 		}
 
-//		dbAdapter.open();
-//		int numRecords = dbAdapter.numberRecipesInDb();
-//		if(numRecords > 1){
-//			recipeList = dbAdapter.retrieveAllRecipes();				
-//		}
-//		dbAdapter.close();
+		dbAdapter.open();
+		int numRecords = dbAdapter.numberRecipesInDb();
+		if(numRecords > 1){
+			recipeList = dbAdapter.retrieveAllRecipes();				
+		}
+		dbAdapter.close();
 
 		Intent intent = getIntent();
 		if(intent.hasExtra(Home.RECIPE_LIST_INTENT)){

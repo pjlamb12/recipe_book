@@ -154,6 +154,7 @@ public class RecipeDbAdapter {
 				List<String> directionList = unescapeString(directions);
 				recipe.setDirections(directionList);
 				recipeList.add(recipe);
+				cursor.moveToNext();
 			}
 		}
 		return recipeList;
@@ -164,6 +165,7 @@ public class RecipeDbAdapter {
 		Log.d(ADPTR_LOGTAG, "GET_ALL_RECIPES_QUERY Readable DB opened");
 		
 		Cursor cursor = db.query(RECIPE_TABLE, null, null, null, null, null, null);
-		return cursor.getCount();
+		int count = cursor.getCount();
+		return count;
 	}
 }
