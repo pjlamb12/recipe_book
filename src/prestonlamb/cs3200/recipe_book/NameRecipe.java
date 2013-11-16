@@ -1,16 +1,17 @@
 package prestonlamb.cs3200.recipe_book;
 
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
 
 public class NameRecipe extends Activity {
 
@@ -21,6 +22,27 @@ public class NameRecipe extends Activity {
 		setContentView(R.layout.activity_name_recipe);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		Intent intent = getIntent();
+		if(intent.hasExtra("Recipe")){
+			recipe = intent.getParcelableExtra("Recipe");
+			EditText nameInput = (EditText)findViewById(R.id.enter_name);
+			nameInput.setText(recipe.getRecipeName());
+			String category = recipe.getCategory();
+			RadioButton button;
+			if(category.equals("Appetizer")){
+				button = (RadioButton)findViewById(R.id.appetizer_radio);
+				button.setChecked(true);
+			} else if (category.equals("Entree")){
+				button = (RadioButton)findViewById(R.id.entree_radio);
+				button.setChecked(true);				
+			} else if (category.equals("Soup")){
+				button = (RadioButton)findViewById(R.id.soup_radio);
+				button.setChecked(true);
+			} else if (category.equals("Dessert")){
+				button = (RadioButton)findViewById(R.id.dessert_radio);
+				button.setChecked(true);
+			}
+		}
 	}
 	
 	@SuppressWarnings("unused")

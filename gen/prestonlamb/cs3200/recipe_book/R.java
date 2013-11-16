@@ -24,9 +24,11 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080014;
+        public static final int action_settings=0x7f080019;
         public static final int add_direction=0x7f080001;
         public static final int add_ingredient=0x7f080005;
+        public static final int all_directions=0x7f080016;
+        public static final int all_ingredients=0x7f080015;
         public static final int appetizer_radio=0x7f08000d;
         public static final int category_group=0x7f08000c;
         public static final int dessert_radio=0x7f080010;
@@ -37,11 +39,14 @@ public final class R {
         public static final int entree_radio=0x7f08000e;
         public static final int finish=0x7f080003;
         public static final int ingredient_list=0x7f080006;
-        public static final int ingredient_text_view=0x7f080013;
+        public static final int ingredient_text_view=0x7f080018;
+        public static final int layoutView=0x7f080013;
         public static final int new_recipe=0x7f080009;
         public static final int nextIngredients=0x7f080011;
         public static final int next_directions=0x7f080007;
-        public static final int recipe_list=0x7f080012;
+        public static final int recipe_list=0x7f080017;
+        public static final int recipe_name_view=0x7f080014;
+        public static final int scrollView1=0x7f080012;
         public static final int soup_radio=0x7f08000f;
         public static final int title_string=0x7f080008;
         public static final int view_recipes=0x7f08000a;
@@ -51,16 +56,18 @@ public final class R {
         public static final int activity_add_ingredients=0x7f030001;
         public static final int activity_home=0x7f030002;
         public static final int activity_name_recipe=0x7f030003;
-        public static final int activity_view_recipes=0x7f030004;
-        public static final int ingredient_layout=0x7f030005;
-        public static final int recipe_list_layout=0x7f030006;
+        public static final int activity_recipe_details=0x7f030004;
+        public static final int activity_view_recipes=0x7f030005;
+        public static final int ingredient_layout=0x7f030006;
+        public static final int recipe_list_layout=0x7f030007;
     }
     public static final class menu {
         public static final int add_directions=0x7f070000;
         public static final int add_ingredients=0x7f070001;
         public static final int home=0x7f070002;
         public static final int name_recipe=0x7f070003;
-        public static final int view_recipes=0x7f070004;
+        public static final int recipe_details=0x7f070004;
+        public static final int view_recipes=0x7f070005;
     }
     public static final class string {
         public static final int Update=0x7f05000f;
@@ -96,6 +103,7 @@ public final class R {
         public static final int title_activity_add_directions=0x7f050016;
         public static final int title_activity_add_ingredients=0x7f050005;
         public static final int title_activity_name_recipe=0x7f05001d;
+        public static final int title_activity_recipe_details=0x7f050023;
         public static final int title_activity_view_recipes=0x7f050022;
         public static final int view_recipes=0x7f050004;
     }
@@ -126,9 +134,10 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
-        public static final int buttonStyle=0x7f060004;
+        public static final int buttonStyle=0x7f060005;
         public static final int header_string=0x7f060002;
         public static final int listItem=0x7f060003;
-        public static final int smallButtonStyle=0x7f060005;
+        public static final int paragraph=0x7f060004;
+        public static final int smallButtonStyle=0x7f060006;
     }
 }

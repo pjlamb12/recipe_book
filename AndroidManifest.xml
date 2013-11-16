@@ -54,6 +54,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="prestonlamb.cs3200.recipe_book.Home" />
         </activity>
+        <activity
+            android:name="prestonlamb.cs3200.recipe_book.RecipeDetails"
+            android:label="@string/title_activity_recipe_details"
+            android:parentActivityName="prestonlamb.cs3200.recipe_book.ViewRecipes" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="prestonlamb.cs3200.recipe_book.ViewRecipes" />
+        </activity>
     </application>
 
 </manifest>
