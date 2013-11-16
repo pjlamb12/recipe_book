@@ -24,8 +24,8 @@ public class RecipeDetails extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		Intent intent = getIntent();
-		recipe = intent.getParcelableExtra("Recipe");
-		recipeList = intent.getParcelableArrayListExtra("RecipeList");
+		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
+		recipeList = intent.getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
 		
 		TextView recipeName = (TextView)findViewById(R.id.recipe_name_view);
 		recipeName.setText(recipe.getRecipeName());
@@ -68,7 +68,7 @@ public class RecipeDetails extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putParcelableArrayListExtra("RecipeList", (ArrayList<? extends Parcelable>) recipeList);
+			intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}

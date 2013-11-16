@@ -30,7 +30,7 @@ public class AddIngredients extends Activity {
 		setupActionBar();
 
 		Intent intent = getIntent();
-		recipe = intent.getParcelableExtra("Recipe");
+		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
 		
 		if(recipe.getIngredientsSize() == 0){
 			recipe.addSingleIngredient("There are no ingredients yet...");			
@@ -136,7 +136,7 @@ public class AddIngredients extends Activity {
 	
 	public void nextDirections(View v){
 		Intent intent = new Intent(getApplicationContext(), AddDirections.class);
-		intent.putExtra("Recipe", (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 		startActivityForResult(intent, Home.DIRECTIONS_REQUEST);
 	}
 	
@@ -161,7 +161,7 @@ public class AddIngredients extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putExtra("Recipe", (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}

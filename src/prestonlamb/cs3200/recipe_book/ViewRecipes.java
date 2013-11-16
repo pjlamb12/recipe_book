@@ -27,7 +27,7 @@ public class ViewRecipes extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		ListView listView = (ListView)findViewById(R.id.recipe_list);
-		recipeList = getIntent().getParcelableArrayListExtra("RecipeList");
+		recipeList = getIntent().getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
 		List<String> recipeNames = new ArrayList<String>();
 		for(Recipe recipe : recipeList){
 			recipeNames.add(recipe.getRecipeName());
@@ -40,8 +40,8 @@ public class ViewRecipes extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long itemId) {
 				Recipe selectedRecipe = recipeList.get(position);
 				Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
-				intent.putExtra("Recipe", (Parcelable)selectedRecipe);
-				intent.putParcelableArrayListExtra("RecipeList", (ArrayList<? extends Parcelable>) recipeList);
+				intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
+				intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 				startActivityForResult(intent, 1);
 			}
 			
@@ -69,7 +69,7 @@ public class ViewRecipes extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putParcelableArrayListExtra("RecipeList", (ArrayList<? extends Parcelable>) recipeList);
+			intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
@@ -79,8 +79,8 @@ public class ViewRecipes extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == Home.RESULT_OK && requestCode == DETAIL_REQUEST){
-			if(data.hasExtra("RecipeList"));{
-				recipeList = data.getParcelableExtra("RecipeList");
+			if(data.hasExtra(Home.RECIPE_LIST_INTENT));{
+				recipeList = data.getParcelableExtra(Home.RECIPE_LIST_INTENT);
 			}
 		}
 	}

@@ -23,8 +23,8 @@ public class NameRecipe extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		Intent intent = getIntent();
-		if(intent.hasExtra("Recipe")){
-			recipe = intent.getParcelableExtra("Recipe");
+		if(intent.hasExtra(Home.RECIPE_INTENT)){
+			recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
 			EditText nameInput = (EditText)findViewById(R.id.enter_name);
 			nameInput.setText(recipe.getRecipeName());
 			String category = recipe.getCategory();
@@ -72,7 +72,7 @@ public class NameRecipe extends Activity {
 			}
 			
 			Intent intent = new Intent(getApplicationContext(), AddIngredients.class);
-			intent.putExtra("Recipe", (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 			startActivityForResult(intent, Home.INGREDIENTS_REQUEST);
 		} else {
 			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();			

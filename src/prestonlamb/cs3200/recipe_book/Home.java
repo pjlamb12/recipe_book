@@ -19,14 +19,16 @@ public class Home extends Activity {
 	public static final int INGREDIENTS_REQUEST = 2;
 	public static final int DIRECTIONS_REQUEST = 3;
 	public static final int RECIPES_REQUEST = 4;
+	public static final String RECIPE_LIST_INTENT = "RecipeList";
+	public static final String RECIPE_INTENT = "Recipe";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		Intent intent = getIntent();
-		if(intent.hasExtra("RecipeList")){
-			recipeList = intent.getParcelableArrayListExtra("RecipeList");
+		if(intent.hasExtra(Home.RECIPE_LIST_INTENT)){
+			recipeList = intent.getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
 		}
 		
 	}
@@ -38,7 +40,7 @@ public class Home extends Activity {
 	
 	public void viewRecipes(View v){
 		Intent intent = new Intent(getApplicationContext(), ViewRecipes.class);
-		intent.putParcelableArrayListExtra("RecipeList", (ArrayList<? extends Parcelable>) recipeList);
+		intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 		startActivity(intent);
 	}
 	
@@ -46,7 +48,7 @@ public class Home extends Activity {
 
 		if(resultCode == RESULT_OK && requestCode == NAME_REQUEST){
 			if(data.hasExtra("Recipe"));{
-				Recipe newRecipe = data.getParcelableExtra("Recipe");
+				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
 				if(newRecipe != null){
 					recipeList.add(newRecipe);			
 				}

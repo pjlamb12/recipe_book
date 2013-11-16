@@ -30,7 +30,7 @@ public class AddDirections extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		Intent intent = getIntent();
-		recipe = intent.getParcelableExtra("Recipe");
+		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
 		
 		if(recipe.getDirectionsSize() == 0){
 			recipe.addSingleDirection("There are no directions yet...");
@@ -138,7 +138,7 @@ public class AddDirections extends Activity {
 	
 	public void finish(View v){
 		Intent intent = new Intent(getApplicationContext(), Home.class);
-		intent.putExtra("Recipe", (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 		setResult(Home.RESULT_OK, intent);
 		finish();
 	}
@@ -164,7 +164,7 @@ public class AddDirections extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putExtra("Recipe", (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
