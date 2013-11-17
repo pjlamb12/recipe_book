@@ -159,8 +159,6 @@ public class RecipeDbAdapter {
 					recipeList.add(recipe);
 					cursor.moveToNext();
 				}
-			} else {
-				recipeList = null;
 			}
 			cursor.close();
 			db.close();

@@ -20,11 +20,10 @@ import android.widget.ListView;
 
 public class ViewRecipes extends Activity {
 
-	List<Recipe> recipeList;
+	List<Recipe> recipeList = new ArrayList<Recipe>();
 	public static final int DETAIL_REQUEST = 1;
 	RecipeDbAdapter dbAdapter = null;
 	RecipeListArrayAdapter adptr;
-	boolean noRecipes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +38,9 @@ public class ViewRecipes extends Activity {
 		recipeList = dbAdapter.retrieveAllRecipes();
 		List<String> recipeNames = new ArrayList<String>();
 		if(recipeList != null){
-			noRecipes = false;
 			for(Recipe recipe : recipeList){
 				recipeNames.add(recipe.getRecipeName());
 			}			
-		} else {
-			noRecipes = true;
-			recipeNames.add("You have no recipes!");
 		}
 		adptr = new RecipeListArrayAdapter(this, R.layout.recipe_list_layout, recipeNames);
 		listView.setAdapter(adptr);
@@ -53,17 +48,11 @@ public class ViewRecipes extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long itemId) {
-				
-				if(noRecipes){
-					
-				}
-				else{
-					Recipe selectedRecipe = recipeList.get(position);
-					Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
-					intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
-					intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
-					startActivityForResult(intent, 1);					
-				}
+				Recipe selectedRecipe = recipeList.get(position);
+				Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
+				intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
+				intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
+				startActivityForResult(intent, 1);					
 			}
 			
 		});
@@ -72,12 +61,7 @@ public class ViewRecipes extends Activity {
 
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long itemId) {
-				if(noRecipes){
-					
-				}
-				else{
-					showDeletionDialog(position);					
-				}
+				showDeletionDialog(position);					
 				return false;
 			}
 		});
