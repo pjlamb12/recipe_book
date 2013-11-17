@@ -166,7 +166,7 @@ public class RecipeDbAdapter {
 			return recipeList;
 		} catch (Exception e){
 			e.printStackTrace();
-			return null;
+			return new ArrayList<Recipe>();
 		}
 	}
 	
@@ -200,7 +200,7 @@ public class RecipeDbAdapter {
 			return recipe;
 		} catch(Exception e){
 			e.printStackTrace();
-			return null;
+			return new Recipe();
 		}
 	}
 	
