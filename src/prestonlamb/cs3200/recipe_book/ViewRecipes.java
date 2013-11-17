@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -13,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 
 public class ViewRecipes extends Activity {
@@ -20,6 +23,8 @@ public class ViewRecipes extends Activity {
 	List<Recipe> recipeList;
 	public static final int DETAIL_REQUEST = 1;
 	RecipeDbAdapter dbAdapter = null;
+	RecipeListArrayAdapter adptr;
+	boolean noRecipes;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,30 +33,88 @@ public class ViewRecipes extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		ListView listView = (ListView)findViewById(R.id.recipe_list);
-//		recipeList = getIntent().getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
 		if(dbAdapter == null){
 			dbAdapter = new RecipeDbAdapter(this);
 		}
 		recipeList = dbAdapter.retrieveAllRecipes();
 		List<String> recipeNames = new ArrayList<String>();
-		for(Recipe recipe : recipeList){
-			recipeNames.add(recipe.getRecipeName());
+		if(recipeList != null){
+			noRecipes = false;
+			for(Recipe recipe : recipeList){
+				recipeNames.add(recipe.getRecipeName());
+			}			
+		} else {
+			noRecipes = true;
+			recipeNames.add("You have no recipes!");
 		}
-		RecipeListArrayAdapter adptr = new RecipeListArrayAdapter(this, R.layout.recipe_list_layout, recipeNames);
+		adptr = new RecipeListArrayAdapter(this, R.layout.recipe_list_layout, recipeNames);
 		listView.setAdapter(adptr);
 		listView.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long itemId) {
-				Recipe selectedRecipe = recipeList.get(position);
-				Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
-				intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
-				intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
-				startActivityForResult(intent, 1);
+				
+				if(noRecipes){
+					
+				}
+				else{
+					Recipe selectedRecipe = recipeList.get(position);
+					Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
+					intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
+					intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
+					startActivityForResult(intent, 1);					
+				}
 			}
 			
 		});
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long itemId) {
+				if(noRecipes){
+					
+				}
+				else{
+					showDeletionDialog(position);					
+				}
+				return false;
+			}
+		});
 	}
+	
+	public void showDeletionDialog(final int listItem){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.delete_recipe_dialog_desc);
+		builder.setTitle(R.string.delete_recipe_dialog_title);
+		builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Recipe recipe = recipeList.get(listItem);
+				int id = recipe.getId();
+				if(dbAdapter == null){
+					dbAdapter = new RecipeDbAdapter(getApplicationContext());
+				}
+				dbAdapter.deleteRecipeWhereId(id);
+				recipeList = dbAdapter.retrieveAllRecipes();
+				adptr.notifyDataSetChanged();
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Do nothing on the cancel
+				dialog.cancel();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+
+
+	}
+
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
