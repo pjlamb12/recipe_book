@@ -19,6 +19,7 @@ public class ViewRecipes extends Activity {
 
 	List<Recipe> recipeList;
 	public static final int DETAIL_REQUEST = 1;
+	RecipeDbAdapter dbAdapter = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,11 @@ public class ViewRecipes extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		ListView listView = (ListView)findViewById(R.id.recipe_list);
-		recipeList = getIntent().getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
+//		recipeList = getIntent().getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		recipeList = dbAdapter.retrieveAllRecipes();
 		List<String> recipeNames = new ArrayList<String>();
 		for(Recipe recipe : recipeList){
 			recipeNames.add(recipe.getRecipeName());

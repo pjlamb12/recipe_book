@@ -10,11 +10,22 @@ import android.os.Parcelable;
 public class Recipe implements Parcelable, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	int id;
 	String recipeName;
 	String category;
 	List<String> ingredients;
 	List<String> directions;
 	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Recipe(){
 		ingredients = new ArrayList<String>();
 		directions = new ArrayList<String>();

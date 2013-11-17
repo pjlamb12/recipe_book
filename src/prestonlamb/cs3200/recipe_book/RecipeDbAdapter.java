@@ -143,6 +143,8 @@ public class RecipeDbAdapter {
 			cursor.moveToFirst();
 			Recipe recipe = new Recipe();
 			while(cursor.isAfterLast() == false){
+				int recipeId = cursor.getInt(cursor.getColumnIndex(RECIPE_ID_COL_NAME));
+				recipe.setId(recipeId);
 				String recipeName = cursor.getString(cursor.getColumnIndex(RECIPE_NAME_COL_NAME));
 				recipe.setRecipeName(recipeName);
 				String category = cursor.getString(cursor.getColumnIndex(RECIPE_CATEGORY_COL_NAME));
