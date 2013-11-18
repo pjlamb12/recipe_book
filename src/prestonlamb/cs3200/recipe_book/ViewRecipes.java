@@ -16,7 +16,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 public class ViewRecipes extends Activity {
 
@@ -58,6 +61,52 @@ public class ViewRecipes extends Activity {
 				return false;
 			}
 		});
+		
+		Spinner filter = (Spinner) findViewById(R.id.filter_spinner);
+		ArrayAdapter<CharSequence> spinAdptr = ArrayAdapter.createFromResource(this, R.array.categories_array, R.layout.spinner_item_layout);
+		filter.setAdapter(spinAdptr);
+		
+		filter.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long itemId) {
+				if(dbAdapter == null){
+					dbAdapter = new RecipeDbAdapter(getApplicationContext());
+				}
+				dbAdapter.open();
+				switch (position) {
+					case 0:	//all
+						setRecipes();
+						break;
+					case 1: //Appetizers
+						recipeList = dbAdapter.getRecipesByCategory("Appetizer");
+						setRecipeNames();
+						break;
+					case 2: //Entrees
+						recipeList = dbAdapter.getRecipesByCategory("Entree");
+						setRecipeNames();
+						break;
+					case 3: //Soups
+						recipeList = dbAdapter.getRecipesByCategory("Soup");
+						setRecipeNames();
+						break;
+					case 4: //Desserts
+						recipeList = dbAdapter.getRecipesByCategory("Dessert");
+						setRecipeNames();
+						break;
+					default:
+						setRecipes();
+						break;
+				}
+				dbAdapter.close();
+				adptr.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				
+			}
+		});
 	}
 	
 	public void setRecipes(){
@@ -66,13 +115,17 @@ public class ViewRecipes extends Activity {
 		}
 		dbAdapter.open();
 		recipeList = dbAdapter.retrieveAllRecipes();
+		dbAdapter.close();
+		setRecipeNames();
+	}
+	
+	public void setRecipeNames(){
 		recipeNames.clear();
 		if(recipeList != null){
 			for(Recipe recipe : recipeList){
 				recipeNames.add(recipe.getRecipeName());
 			}			
 		}
-		dbAdapter.close();
 	}
 	
 	public void showDeletionDialog(final int listItem){

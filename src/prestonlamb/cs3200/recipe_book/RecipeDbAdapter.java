@@ -204,6 +204,41 @@ public class RecipeDbAdapter {
 		}
 	}
 	
+	static final String GET_RECIPE_BY_CATEGORY = "SELECT * FROM " + RECIPE_TABLE + " WHERE category=?";
+	static final String RECIPE_BY_CATEGORY_WHERE = "category = ?";
+	public List<Recipe> getRecipesByCategory(String passedCategory){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Log.d(ADPTR_LOGTAG, "GET_RECIPES_BY_CATEGORY_QUERY Readable DB opened");
+		String[] args = new String[1];
+		args[0] = passedCategory;
+		Cursor cursor = db.query(RECIPE_TABLE, null, RECIPE_BY_CATEGORY_WHERE, args, null, null, null);
+		Recipe recipe = new Recipe();
+		List<Recipe> recipeList = new ArrayList<Recipe>();
+		try{
+			if (cursor.getCount() != 0){
+				cursor.moveToFirst();
+				int recipeId = cursor.getInt(cursor.getColumnIndex(RECIPE_ID_COL_NAME));
+				recipe.setId(recipeId);
+				String recipeName = cursor.getString(cursor.getColumnIndex(RECIPE_NAME_COL_NAME));
+				recipe.setRecipeName(recipeName);
+				String category = cursor.getString(cursor.getColumnIndex(RECIPE_CATEGORY_COL_NAME));
+				recipe.setCategory(category);
+				String ingredients = cursor.getString(cursor.getColumnIndex(RECIPE_INGREDIENTS_COL_NAME));
+				List<String> ingredientList = unescapeString(ingredients);
+				recipe.setAllIngredients(ingredientList);
+				String directions = cursor.getString(cursor.getColumnIndex(RECIPE_DIRECTIONS_COL_NAME));
+				List<String> directionList = unescapeString(directions);
+				recipe.setDirections(directionList);
+				recipeList.add(recipe);
+				cursor.moveToNext();
+			}
+			return recipeList;
+		} catch(Exception e){
+			e.printStackTrace();
+			return new ArrayList<Recipe>();
+		}
+	}
+	
 	public void deleteRecipeWhereId(int id){
 		SQLiteDatabase db = dbHelper.getWritableDatabase();
 		String DELETE_RECIPE_WHERE_ID = "id = ?";
