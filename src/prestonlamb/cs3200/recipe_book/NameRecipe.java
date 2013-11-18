@@ -16,6 +16,7 @@ import android.widget.Toast;
 public class NameRecipe extends Activity {
 
 	Recipe recipe = new Recipe();
+	int recipe_id;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +26,8 @@ public class NameRecipe extends Activity {
 		Intent intent = getIntent();
 		if(intent.hasExtra(Home.RECIPE_INTENT)){
 			recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
+			recipe_id = intent.getIntExtra(Home.RECIPE_ID_INTENT, -1);
+			recipe.setId(recipe_id);
 			EditText nameInput = (EditText)findViewById(R.id.enter_name);
 			nameInput.setText(recipe.getRecipeName());
 			String category = recipe.getCategory();
@@ -73,6 +76,7 @@ public class NameRecipe extends Activity {
 			
 			Intent intent = new Intent(getApplicationContext(), AddIngredients.class);
 			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 			startActivityForResult(intent, Home.INGREDIENTS_REQUEST);
 		} else {
 			Toast.makeText(getApplicationContext(), R.string.name_required, Toast.LENGTH_LONG).show();			

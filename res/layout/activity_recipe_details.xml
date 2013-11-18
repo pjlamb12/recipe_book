@@ -41,6 +41,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <Button 
+            android:id="@+id/update_recipe"
+            style="@style/buttonStyle"
+            android:onClick="updateRecipe"
+            android:text="@string/update_recipe"/>
         </LinearLayout>
 
 </ScrollView>

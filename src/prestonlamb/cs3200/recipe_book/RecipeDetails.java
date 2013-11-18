@@ -1,8 +1,5 @@
 package prestonlamb.cs3200.recipe_book;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,13 +7,15 @@ import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class RecipeDetails extends Activity {
 
-	Recipe recipe;
-	List<Recipe> recipeList;
-	
+	Recipe recipe = new Recipe();
+	int recipe_id;
+	RecipeDbAdapter dbAdapter = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,7 +24,8 @@ public class RecipeDetails extends Activity {
 		setupActionBar();
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
-		recipeList = intent.getParcelableArrayListExtra(Home.RECIPE_LIST_INTENT);
+		recipe_id = intent.getIntExtra(Home.RECIPE_ID_INTENT, -1);
+		recipe.setId(recipe_id);
 		
 		TextView recipeName = (TextView)findViewById(R.id.recipe_name_view);
 		recipeName.setText(recipe.getRecipeName());
@@ -68,11 +68,41 @@ public class RecipeDetails extends Activity {
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void updateRecipe(View v){
+		Intent intent = new Intent(getApplicationContext(), NameRecipe.class);
+		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
+		startActivityForResult(intent, Home.NAME_REQUEST);
+	}
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
+
+		if(resultCode == Home.RESULT_OK && requestCode == Home.NAME_REQUEST){
+			if(data.hasExtra(Home.RECIPE_INTENT));{
+				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
+				int recipe_id = data.getIntExtra(Home.RECIPE_ID_INTENT, -1);
+				newRecipe.setId(recipe_id);
+				if(newRecipe != null){
+					if(dbAdapter == null){
+						dbAdapter = new RecipeDbAdapter(this);
+					}
+					dbAdapter.open();
+					if(newRecipe.getId() == -1){
+						dbAdapter.insertRecipe(newRecipe);						
+					}else{
+						dbAdapter.updateRecipeWhereID(newRecipe);
+					}
+					dbAdapter.close();
+				}
+			}
+		}
+		setResult(ViewRecipes.DETAIL_REQUEST);
+		finish();
 	}
 
 }

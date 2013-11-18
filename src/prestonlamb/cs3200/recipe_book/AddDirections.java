@@ -21,6 +21,7 @@ import android.text.InputType;
 public class AddDirections extends Activity {
 
 	Recipe recipe;
+	int recipe_id;
 	DirectionArrayAdapter adptr;
 	
 	@Override
@@ -31,6 +32,8 @@ public class AddDirections extends Activity {
 		setupActionBar();
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
+		recipe_id = intent.getIntExtra(Home.RECIPE_ID_INTENT, -1);
+		recipe.setId(recipe_id);
 		
 		if(recipe.getDirectionsSize() == 0){
 			recipe.addSingleDirection("There are no directions yet...");
@@ -139,6 +142,7 @@ public class AddDirections extends Activity {
 	public void finish(View v){
 		Intent intent = new Intent(getApplicationContext(), Home.class);
 		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 		setResult(Home.RESULT_OK, intent);
 		finish();
 	}

@@ -24,7 +24,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001c;
+        public static final int action_settings=0x7f08001d;
         public static final int add_direction=0x7f080001;
         public static final int add_ingredient=0x7f080005;
         public static final int all_directions=0x7f080018;
@@ -40,18 +40,19 @@ public final class R {
         public static final int entree_radio=0x7f08000e;
         public static final int finish=0x7f080003;
         public static final int ingredient_list=0x7f080006;
-        public static final int ingredient_text_view=0x7f08001a;
+        public static final int ingredient_text_view=0x7f08001b;
         public static final int ingredients_title=0x7f080015;
         public static final int layoutView=0x7f080013;
         public static final int new_recipe=0x7f080009;
         public static final int nextIngredients=0x7f080011;
         public static final int next_directions=0x7f080007;
-        public static final int recipe_list=0x7f080019;
-        public static final int recipe_name_list=0x7f08001b;
+        public static final int recipe_list=0x7f08001a;
+        public static final int recipe_name_list=0x7f08001c;
         public static final int recipe_name_view=0x7f080014;
         public static final int scrollView1=0x7f080012;
         public static final int soup_radio=0x7f08000f;
         public static final int title_string=0x7f080008;
+        public static final int update_recipe=0x7f080019;
         public static final int view_recipes=0x7f08000a;
     }
     public static final class layout {
@@ -112,6 +113,7 @@ public final class R {
         public static final int title_activity_name_recipe=0x7f05001d;
         public static final int title_activity_recipe_details=0x7f050023;
         public static final int title_activity_view_recipes=0x7f050022;
+        public static final int update_recipe=0x7f050028;
         public static final int view_recipes=0x7f050004;
     }
     public static final class style {

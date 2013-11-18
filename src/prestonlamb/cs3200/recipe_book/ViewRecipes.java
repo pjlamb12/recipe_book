@@ -33,15 +33,7 @@ public class ViewRecipes extends Activity {
 		// Show the Up button in the action bar.
 		setupActionBar();
 		ListView listView = (ListView)findViewById(R.id.recipe_list);
-		if(dbAdapter == null){
-			dbAdapter = new RecipeDbAdapter(this);
-		}
-		recipeList = dbAdapter.retrieveAllRecipes();
-		if(recipeList != null){
-			for(Recipe recipe : recipeList){
-				recipeNames.add(recipe.getRecipeName());
-			}			
-		}
+		setRecipes();
 		adptr = new RecipeListArrayAdapter(this, R.layout.recipe_list_layout, recipeNames);
 		listView.setAdapter(adptr);
 		listView.setOnItemClickListener(new OnItemClickListener(){
@@ -51,6 +43,7 @@ public class ViewRecipes extends Activity {
 				Recipe selectedRecipe = recipeList.get(position);
 				Intent intent = new Intent(getApplicationContext(), RecipeDetails.class);
 				intent.putExtra(Home.RECIPE_INTENT, (Parcelable)selectedRecipe);
+				intent.putExtra(Home.RECIPE_ID_INTENT, selectedRecipe.getId());
 				intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 				startActivityForResult(intent, 1);					
 			}
@@ -67,6 +60,21 @@ public class ViewRecipes extends Activity {
 		});
 	}
 	
+	public void setRecipes(){
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		dbAdapter.open();
+		recipeList = dbAdapter.retrieveAllRecipes();
+		recipeNames.clear();
+		if(recipeList != null){
+			for(Recipe recipe : recipeList){
+				recipeNames.add(recipe.getRecipeName());
+			}			
+		}
+		dbAdapter.close();
+	}
+	
 	public void showDeletionDialog(final int listItem){
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(R.string.delete_recipe_dialog_desc);
@@ -80,13 +88,7 @@ public class ViewRecipes extends Activity {
 					dbAdapter = new RecipeDbAdapter(getApplicationContext());
 				}
 				dbAdapter.deleteRecipeWhereId(id);
-				recipeList = dbAdapter.retrieveAllRecipes();
-				recipeNames.clear();
-				if(recipeList != null){
-					for(Recipe aRecipe : recipeList){
-						recipeNames.add(aRecipe.getRecipeName());
-					}			
-				}				
+				setRecipes();
 				adptr.notifyDataSetChanged();
 				dialog.dismiss();
 			}
@@ -137,9 +139,8 @@ public class ViewRecipes extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == Home.RESULT_OK && requestCode == DETAIL_REQUEST){
-			if(data.hasExtra(Home.RECIPE_LIST_INTENT));{
-				recipeList = data.getParcelableExtra(Home.RECIPE_LIST_INTENT);
-			}
+			setRecipes();
+			adptr.notifyDataSetChanged();
 		}
 	}
 

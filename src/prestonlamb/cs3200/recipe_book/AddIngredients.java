@@ -21,6 +21,7 @@ import android.text.InputType;
 public class AddIngredients extends Activity {
 
 	Recipe recipe;
+	int recipe_id;
 	IngredientArrayAdapter adptr;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class AddIngredients extends Activity {
 
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
+		recipe_id = intent.getIntExtra(Home.RECIPE_ID_INTENT, -1);
+		recipe.setId(recipe_id);
 		
 		if(recipe.getIngredientsSize() == 0){
 			recipe.addSingleIngredient("There are no ingredients yet...");			
@@ -137,6 +140,7 @@ public class AddIngredients extends Activity {
 	public void nextDirections(View v){
 		Intent intent = new Intent(getApplicationContext(), AddDirections.class);
 		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 		startActivityForResult(intent, Home.DIRECTIONS_REQUEST);
 	}
 	

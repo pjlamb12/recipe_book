@@ -217,6 +217,28 @@ public class RecipeDbAdapter {
 		db.close();
 	}
 	
+	static final String UPDATE_WHERE_ID = "id = ?";
+	public boolean updateRecipeWhereID(Recipe recipe){
+		try{
+			ContentValues newRecipe = new ContentValues();
+			String ingredients = escapeString(recipe.getAllIngredients());
+			String directions = escapeString(recipe.getAllDirections());
+			String args[] = new String[1];
+			args[0] = Integer.toString(recipe.id);
+			
+			newRecipe.put(RECIPE_NAME_COL_NAME, recipe.getRecipeName());
+			newRecipe.put(RECIPE_CATEGORY_COL_NAME, recipe.getCategory());
+			newRecipe.put(RECIPE_INGREDIENTS_COL_NAME, ingredients);
+			newRecipe.put(RECIPE_DIRECTIONS_COL_NAME, directions);
+			db.update(RECIPE_TABLE, newRecipe, UPDATE_WHERE_ID, args);
+			Log.d(ADPTR_LOGTAG, "Updated recipe record: " + recipe.id);
+
+			return true;
+		} catch (Exception e){
+			return false;
+		}
+	}
+	
 	public int numberRecipesInDb(){
 		SQLiteDatabase db = this.getReadableDatabase();
 		Log.d(ADPTR_LOGTAG, "GET_ALL_RECIPES_QUERY Readable DB opened");

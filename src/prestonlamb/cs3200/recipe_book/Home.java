@@ -17,6 +17,7 @@ public class Home extends Activity {
 	public static final int RECIPES_REQUEST = 4;
 	public static final String RECIPE_LIST_INTENT = "RecipeList";
 	public static final String RECIPE_INTENT = "Recipe";
+	public static final String RECIPE_ID_INTENT = "RecipeId";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +40,18 @@ public class Home extends Activity {
 		if(resultCode == RESULT_OK && requestCode == NAME_REQUEST){
 			if(data.hasExtra(Home.RECIPE_INTENT));{
 				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
+				int recipe_id = data.getIntExtra(RECIPE_ID_INTENT, -1);
+				newRecipe.setId(recipe_id);
 				if(newRecipe != null){
 					if(dbAdapter == null){
 						dbAdapter = new RecipeDbAdapter(this);
 					}
 					dbAdapter.open();
-					dbAdapter.insertRecipe(newRecipe);
+					if(newRecipe.getId() == -1){
+						dbAdapter.insertRecipe(newRecipe);						
+					}else{
+						dbAdapter.updateRecipeWhereID(newRecipe);
+					}
 					dbAdapter.close();
 				}
 			}

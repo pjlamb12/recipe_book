@@ -29,6 +29,7 @@ public class Recipe implements Parcelable, Serializable {
 	public Recipe(){
 		ingredients = new ArrayList<String>();
 		directions = new ArrayList<String>();
+		id = -1;
 	}
 	
 	public String getRecipeName() {
