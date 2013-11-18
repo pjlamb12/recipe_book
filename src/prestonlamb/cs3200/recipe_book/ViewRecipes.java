@@ -21,6 +21,7 @@ import android.widget.ListView;
 public class ViewRecipes extends Activity {
 
 	List<Recipe> recipeList = new ArrayList<Recipe>();
+	List<String> recipeNames = new ArrayList<String>();
 	public static final int DETAIL_REQUEST = 1;
 	RecipeDbAdapter dbAdapter = null;
 	RecipeListArrayAdapter adptr;
@@ -36,7 +37,6 @@ public class ViewRecipes extends Activity {
 			dbAdapter = new RecipeDbAdapter(this);
 		}
 		recipeList = dbAdapter.retrieveAllRecipes();
-		List<String> recipeNames = new ArrayList<String>();
 		if(recipeList != null){
 			for(Recipe recipe : recipeList){
 				recipeNames.add(recipe.getRecipeName());
@@ -81,6 +81,12 @@ public class ViewRecipes extends Activity {
 				}
 				dbAdapter.deleteRecipeWhereId(id);
 				recipeList = dbAdapter.retrieveAllRecipes();
+				recipeNames.clear();
+				if(recipeList != null){
+					for(Recipe aRecipe : recipeList){
+						recipeNames.add(aRecipe.getRecipeName());
+					}			
+				}				
 				adptr.notifyDataSetChanged();
 				dialog.dismiss();
 			}
