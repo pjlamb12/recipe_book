@@ -1,10 +1,18 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 public class Home extends Activity {
 
@@ -65,4 +73,28 @@ public class Home extends Activity {
 		return true;
 	}
 
+	public void exportRecipes(View v){
+		try {
+			String destination = Environment.getExternalStorageDirectory().toString() + "/recipes.db";
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + "/" + "recipes.db");
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			RecipeDbAdapter dbAdapter = new RecipeDbAdapter(this);
+			dbAdapter.open();
+			List<Recipe> recipeList = dbAdapter.retrieveAllRecipes();
+			dbAdapter.close();
+			for(Recipe recipe : recipeList){
+				out.writeObject(recipe);
+			}
+			out.close();
+			fileOut.close();
+			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void importRecipes(){
+		
+	}
 }

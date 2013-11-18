@@ -20,4 +20,10 @@
         android:text="@string/view_recipes"
         android:onClick="viewRecipes" />
 
+    <Button
+        android:id="@+id/export_recipes"
+        style="@style/buttonStyle"
+        android:text="@string/export_recipes"
+        android:onClick="exportRecipes" />
+
 </LinearLayout>

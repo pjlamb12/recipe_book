@@ -63,5 +63,5 @@
                 android:value="prestonlamb.cs3200.recipe_book.ViewRecipes" />
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

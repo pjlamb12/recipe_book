@@ -6,6 +6,7 @@
     <string name="title">Recipe Book</string>
     <string name="new_recipe">New Recipe</string>
     <string name="view_recipes">View Recipes</string>
+    <string name="export_recipes">Export Recipes</string>
     <string name="title_activity_add_ingredients">Add Ingredients</string>
     <string name="hello_world">Hello world!</string>
     <string name="ingredient_hint">New Ingredient&#8230;</string>
