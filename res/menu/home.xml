@@ -6,4 +6,13 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
 
+    <item 
+        android:id="@+id/email_database"
+        android:showAsAction="never"
+        android:title="@string/email_database"/>
+
+    <item 
+        android:id="@+id/email_recipes"
+        android:showAsAction="never"
+        android:title="@string/email_recipes"/>
 </menu>

@@ -37,14 +37,16 @@ public final class R {
         public static final int dessert_radio=0x7f090012;
         public static final int direcion_list=0x7f090002;
         public static final int directions_title=0x7f090019;
-        public static final int email_recipe=0x7f090020;
+        public static final int email_database=0x7f090020;
+        public static final int email_recipe=0x7f090022;
+        public static final int email_recipes=0x7f090021;
         public static final int enter_direction=0x7f090000;
         public static final int enter_ingredient=0x7f090004;
         public static final int enter_name=0x7f09000d;
         public static final int entree_radio=0x7f090010;
         public static final int export_database=0x7f09000b;
-        public static final int export_recipes=0x7f090023;
-        public static final int export_text=0x7f090022;
+        public static final int export_recipes=0x7f090025;
+        public static final int export_text=0x7f090024;
         public static final int filter_spinner=0x7f09001b;
         public static final int finish=0x7f090003;
         public static final int import_database=0x7f09000c;
@@ -61,7 +63,7 @@ public final class R {
         public static final int scrollView1=0x7f090014;
         public static final int soup_radio=0x7f090011;
         public static final int title_string=0x7f090008;
-        public static final int update_recipe=0x7f090021;
+        public static final int update_recipe=0x7f090023;
         public static final int view_recipes=0x7f09000a;
     }
     public static final class layout {
@@ -106,9 +108,11 @@ public final class R {
         public static final int directions=0x7f06002e;
         public static final int edit_direction=0x7f060015;
         public static final int edit_ingredient=0x7f060014;
+        public static final int email_database=0x7f060035;
         public static final int email_recipe=0x7f060032;
+        public static final int email_recipes=0x7f060033;
         public static final int entree_radio=0x7f060028;
-        public static final int error_opening_file=0x7f060033;
+        public static final int error_opening_file=0x7f060034;
         public static final int export_database=0x7f060005;
         public static final int export_recipe=0x7f060008;
         public static final int export_recipes=0x7f060007;

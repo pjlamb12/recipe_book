@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -82,6 +84,99 @@ public class Home extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.email_database:
+			emailDatabase();
+			return true;
+		case R.id.email_recipes:
+			emailRecipes();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
+	public void emailDatabase(){
+		String fileName = "recipes.db";
+		try {
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			if(dbAdapter == null){
+				dbAdapter = new RecipeDbAdapter(this);
+			}
+			dbAdapter.open();
+			List<Recipe> recipeList = dbAdapter.retrieveAllRecipes();
+			dbAdapter.close();
+			out.writeObject(recipeList);
+			out.close();
+			fileOut.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
+		File file = new File(Environment.getExternalStorageDirectory(), fileName);
+		if (!file.exists() || !file.canRead()){
+			Toast.makeText(getApplicationContext(), "Error attaching file", Toast.LENGTH_LONG).show();
+		} else{
+			Uri uri = Uri.parse("file://" + path);
+			Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "", null));
+			emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Recipe Book Database");
+			emailIntent.putExtra(Intent.EXTRA_TEXT, "Here's my recipe book database. Hope you like it!");
+			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+			emailIntent.setType("plain/text");
+			startActivity(Intent.createChooser(emailIntent, "Email recipe database..."));			
+		}
+
+	}
+	
+	public void emailRecipes(){
+		String fileName = "recipes.txt";
+		try {
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
+			@SuppressWarnings("resource")
+			PrintStream out = new PrintStream(fileOut);
+			if(dbAdapter == null){
+				dbAdapter = new RecipeDbAdapter(this);
+			}
+			dbAdapter.open();
+			List<Recipe> recipeList = dbAdapter.retrieveAllRecipes();
+			dbAdapter.close();
+			
+			for(Recipe recipe : recipeList){
+				StringBuffer recipeOut = new StringBuffer();
+				recipeOut.append(recipe.getRecipeName() + "\n\n");
+				recipeOut.append("Ingredients\n\n");
+				for(String ingredient : recipe.getAllIngredients()){
+					recipeOut.append(ingredient + "\n");
+				}
+				recipeOut.append("\nDirections\n\n");
+				for(String direction : recipe.getAllDirections()){
+					recipeOut.append(direction + "\n");
+				}
+				recipeOut.append("\n\n\n\n\n");
+				
+				out.print(recipeOut.toString());				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
+		File file = new File(Environment.getExternalStorageDirectory(), fileName);
+		if (!file.exists() || !file.canRead()){
+			Toast.makeText(getApplicationContext(), "Error attaching file", Toast.LENGTH_LONG).show();
+		} else{
+			Uri uri = Uri.parse("file://" + path);
+			Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "", null));
+			emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Recipe Book");
+			emailIntent.putExtra(Intent.EXTRA_TEXT, "Here's my Recipe Book. Hope you like it!");
+			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+			emailIntent.setType("plain/text");
+			startActivity(Intent.createChooser(emailIntent, "Email Recipe Book..."));			
+		}
+
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -158,7 +253,6 @@ public class Home extends Activity {
 		dbAdapter.close();
 		Toast.makeText(getApplicationContext(), R.string.recipes_imported, Toast.LENGTH_LONG).show();
 	}
-
 
 	public void exportDatabase(View v){
 		try {
