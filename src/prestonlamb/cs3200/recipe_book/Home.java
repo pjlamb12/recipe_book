@@ -101,6 +101,14 @@ public class Home extends Activity {
 	
 	public void emailDatabase(){
 		String fileName = "recipes.db";
+		String path = makeDbFile(fileName);
+		String subject = "Here's my Recipe Book Database";
+		String body = "Here's my Recipe Book Database. I hope you like the recipes!";
+		String hint = "Email recipe database...";
+		sendEmail(path, subject, body, hint);
+	}
+	
+	public String makeDbFile(String fileName){
 		try {
 			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -113,27 +121,31 @@ public class Home extends Activity {
 			out.writeObject(recipeList);
 			out.close();
 			fileOut.close();
+			return Environment.getExternalStorageDirectory().toString() + File.separator + fileName;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "";
 		}
-		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
-		File file = new File(Environment.getExternalStorageDirectory(), fileName);
+		
+	}
+	
+	public void sendEmail(String path, String subject, String body, String hint){
+		File file = new File(path);
 		if (!file.exists() || !file.canRead()){
 			Toast.makeText(getApplicationContext(), "Error attaching file", Toast.LENGTH_LONG).show();
 		} else{
 			Uri uri = Uri.parse("file://" + path);
 			Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "", null));
-			emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Recipe Book Database");
-			emailIntent.putExtra(Intent.EXTRA_TEXT, "Here's my recipe book database. Hope you like it!");
+			emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+			emailIntent.putExtra(Intent.EXTRA_TEXT, body);
 			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
 			emailIntent.setType("plain/text");
-			startActivity(Intent.createChooser(emailIntent, "Email recipe database..."));			
+			startActivity(Intent.createChooser(emailIntent, hint));			
 		}
-
+		
 	}
 	
-	public void emailRecipes(){
-		String fileName = "recipes.txt";
+	public String makeTextFile(String fileName){
 		try {
 			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
 			@SuppressWarnings("resource")
@@ -158,25 +170,23 @@ public class Home extends Activity {
 				}
 				recipeOut.append("\n\n\n\n\n");
 				
-				out.print(recipeOut.toString());				
+				out.print(recipeOut.toString());
 			}
+			return Environment.getExternalStorageDirectory().toString() + File.separator + fileName;
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "";
 		}
-		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + fileName;
-		File file = new File(Environment.getExternalStorageDirectory(), fileName);
-		if (!file.exists() || !file.canRead()){
-			Toast.makeText(getApplicationContext(), "Error attaching file", Toast.LENGTH_LONG).show();
-		} else{
-			Uri uri = Uri.parse("file://" + path);
-			Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "", null));
-			emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My Recipe Book");
-			emailIntent.putExtra(Intent.EXTRA_TEXT, "Here's my Recipe Book. Hope you like it!");
-			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
-			emailIntent.setType("plain/text");
-			startActivity(Intent.createChooser(emailIntent, "Email Recipe Book..."));			
-		}
-
+		
+	}
+	
+	public void emailRecipes(){
+		String fileName = "recipes.txt";
+		String path = makeTextFile(fileName);
+		String subject = "My Recipe Book";
+		String body = "Here's my Recipe Book. Hope you like them!";
+		String hint = "Email Recipe Book...";
+		sendEmail(path, subject, body, hint);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -255,24 +265,9 @@ public class Home extends Activity {
 	}
 
 	public void exportDatabase(View v){
-		try {
-			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db";
-			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db");
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			if(dbAdapter == null){
-				dbAdapter = new RecipeDbAdapter(this);
-			}
-			dbAdapter.open();
-			List<Recipe> recipeList = dbAdapter.retrieveAllRecipes();
-			dbAdapter.close();
-			out.writeObject(recipeList);
-			out.close();
-			fileOut.close();
-			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		String fileName = "recipes.db";
+		String path = makeDbFile(fileName);
+		Toast.makeText(this, "File written out to " + path, Toast.LENGTH_LONG).show();
 	}
 	
 	public void importDatabase(View v){
