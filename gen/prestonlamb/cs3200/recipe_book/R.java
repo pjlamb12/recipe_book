@@ -108,6 +108,7 @@ public final class R {
         public static final int edit_ingredient=0x7f060014;
         public static final int email_recipe=0x7f060032;
         public static final int entree_radio=0x7f060028;
+        public static final int error_opening_file=0x7f060033;
         public static final int export_database=0x7f060005;
         public static final int export_recipe=0x7f060008;
         public static final int export_recipes=0x7f060007;

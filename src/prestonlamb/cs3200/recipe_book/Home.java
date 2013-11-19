@@ -95,8 +95,10 @@ public class Home extends Activity {
 			replaceDatabaseDialog(recipeList);
 		} catch (IOException e){
 			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), R.string.error_opening_file, Toast.LENGTH_LONG).show();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			Toast.makeText(getApplicationContext(), R.string.error_opening_file, Toast.LENGTH_LONG).show();
 		}
 	}
 	
