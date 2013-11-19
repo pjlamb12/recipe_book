@@ -27,7 +27,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f09001f;
+        public static final int action_settings=0x7f090020;
         public static final int add_direction=0x7f090001;
         public static final int add_ingredient=0x7f090005;
         public static final int all_directions=0x7f090019;
@@ -37,22 +37,23 @@ public final class R {
         public static final int dessert_radio=0x7f090011;
         public static final int direcion_list=0x7f090002;
         public static final int directions_title=0x7f090018;
+        public static final int email_recipe=0x7f09001b;
         public static final int enter_direction=0x7f090000;
         public static final int enter_ingredient=0x7f090004;
         public static final int enter_name=0x7f09000c;
         public static final int entree_radio=0x7f09000f;
         public static final int export_recipes=0x7f09000b;
-        public static final int filter_spinner=0x7f09001b;
+        public static final int filter_spinner=0x7f09001c;
         public static final int finish=0x7f090003;
         public static final int ingredient_list=0x7f090006;
-        public static final int ingredient_text_view=0x7f09001d;
+        public static final int ingredient_text_view=0x7f09001e;
         public static final int ingredients_title=0x7f090016;
         public static final int layoutView=0x7f090014;
         public static final int new_recipe=0x7f090009;
         public static final int nextIngredients=0x7f090012;
         public static final int next_directions=0x7f090007;
-        public static final int recipe_list=0x7f09001c;
-        public static final int recipe_name_list=0x7f09001e;
+        public static final int recipe_list=0x7f09001d;
+        public static final int recipe_name_list=0x7f09001f;
         public static final int recipe_name_view=0x7f090015;
         public static final int scrollView1=0x7f090013;
         public static final int soup_radio=0x7f090010;
@@ -101,6 +102,7 @@ public final class R {
         public static final int directions=0x7f060026;
         public static final int edit_direction=0x7f060012;
         public static final int edit_ingredient=0x7f060011;
+        public static final int email_recipe=0x7f06002a;
         public static final int entree_radio=0x7f060020;
         public static final int export_recipes=0x7f060005;
         public static final int finish=0x7f06001d;

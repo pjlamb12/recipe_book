@@ -2,6 +2,7 @@ package prestonlamb.cs3200.recipe_book;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
@@ -80,6 +81,24 @@ public class RecipeDetails extends Activity {
 		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 		startActivityForResult(intent, Home.NAME_REQUEST);
 	}
+	
+	public void emailRecipe(View v){
+		StringBuffer emailBody = new StringBuffer();
+		emailBody.append("Ingredients\n\n");
+		for(String ingredient : recipe.getAllIngredients()){
+			emailBody.append(ingredient + "\n");
+		}
+		emailBody.append("\nDirections\n\n");
+		for(String direction : recipe.getAllDirections()){
+			emailBody.append(direction + "\n");
+		}
+		
+		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null));
+		emailIntent.putExtra(Intent.EXTRA_SUBJECT, recipe.getRecipeName());
+		emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody.toString());
+		startActivity(Intent.createChooser(emailIntent, "Email recipe..."));
+	}
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == Home.RESULT_OK && requestCode == Home.NAME_REQUEST){

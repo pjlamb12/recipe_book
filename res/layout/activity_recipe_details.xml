@@ -46,6 +46,12 @@
             style="@style/buttonStyle"
             android:onClick="updateRecipe"
             android:text="@string/update_recipe"/>
+
+        <Button 
+            android:id="@+id/email_recipe"
+            style="@style/buttonStyle"
+            android:onClick="emailRecipe"
+            android:text="@string/email_recipe"/>
         </LinearLayout>
 
 </ScrollView>

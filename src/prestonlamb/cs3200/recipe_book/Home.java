@@ -1,6 +1,5 @@
 package prestonlamb.cs3200.recipe_book;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
