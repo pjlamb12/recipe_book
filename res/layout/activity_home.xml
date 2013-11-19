@@ -23,7 +23,7 @@
     <Button
         android:id="@+id/export_recipes"
         style="@style/buttonStyle"
-        android:text="@string/export_recipes"
+        android:text="@string/export_database"
         android:onClick="exportRecipes" />
 
 </LinearLayout>

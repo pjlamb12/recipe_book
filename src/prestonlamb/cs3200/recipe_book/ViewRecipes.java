@@ -1,5 +1,9 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -20,6 +25,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class ViewRecipes extends Activity {
 
@@ -185,8 +191,41 @@ public class ViewRecipes extends Activity {
 			intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
+		case R.id.export_recipes:
+			exportAllAsText();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void exportAllAsText(){
+		try {
+			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt";
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt");
+			PrintStream out = new PrintStream(fileOut);
+			
+			for(Recipe recipe : recipeList){
+				StringBuffer recipeOut = new StringBuffer();
+				recipeOut.append(recipe.getRecipeName() + "\n\n");
+				recipeOut.append("Ingredients\n\n");
+				for(String ingredient : recipe.getAllIngredients()){
+					recipeOut.append(ingredient + "\n");
+				}
+				recipeOut.append("\nDirections\n\n");
+				for(String direction : recipe.getAllDirections()){
+					recipeOut.append(direction + "\n");
+				}
+				recipeOut.append("\n\n\n\n\n");
+				
+				out.print(recipeOut.toString());				
+			}
+			
+			out.close();
+			fileOut.close();
+			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
