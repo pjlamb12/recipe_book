@@ -1,5 +1,6 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -74,8 +75,8 @@ public class Home extends Activity {
 
 	public void exportRecipes(View v){
 		try {
-			String destination = Environment.getExternalStorageDirectory().toString() + "/recipes.db";
-			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + "/" + "recipes.db");
+			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db";
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
 			RecipeDbAdapter dbAdapter = new RecipeDbAdapter(this);
 			dbAdapter.open();

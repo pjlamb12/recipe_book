@@ -1,15 +1,21 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Parcelable;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RecipeDetails extends Activity {
 
@@ -71,18 +77,27 @@ public class RecipeDetails extends Activity {
 			Intent intent = NavUtils.getParentActivityIntent(this);
 			NavUtils.navigateUpTo(this, intent);
 			return true;
+		case R.id.email_recipe:
+			emailRecipe();
+			return true;
+		case R.id.update_recipe:
+			updateRecipe();
+			return true;
+		case R.id.export_text:
+			exportAsText();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void updateRecipe(View v){
+	public void updateRecipe(){
 		Intent intent = new Intent(getApplicationContext(), NameRecipe.class);
 		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 		startActivityForResult(intent, Home.NAME_REQUEST);
 	}
 	
-	public void emailRecipe(View v){
+	public void emailRecipe(){
 		StringBuffer emailBody = new StringBuffer();
 		emailBody.append("Ingredients\n\n");
 		for(String ingredient : recipe.getAllIngredients()){
@@ -97,6 +112,33 @@ public class RecipeDetails extends Activity {
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, recipe.getRecipeName());
 		emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody.toString());
 		startActivity(Intent.createChooser(emailIntent, "Email recipe..."));
+	}
+	
+	public void exportAsText(){
+		try {
+			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + recipe.getRecipeName() + ".txt";
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + recipe.getRecipeName() + ".txt");
+			PrintStream out = new PrintStream(fileOut);
+			
+			StringBuffer recipeOut = new StringBuffer();
+			recipeOut.append(recipe.getRecipeName() + "\n\n");
+			recipeOut.append("Ingredients\n\n");
+			for(String ingredient : recipe.getAllIngredients()){
+				recipeOut.append(ingredient + "\n");
+			}
+			recipeOut.append("\nDirections\n\n");
+			for(String direction : recipe.getAllDirections()){
+				recipeOut.append(direction + "\n");
+			}
+
+			out.print(recipeOut.toString());
+			
+			out.close();
+			fileOut.close();
+			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
