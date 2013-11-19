@@ -128,6 +128,8 @@ public final class R {
         public static final int name_required=0x7f060023;
         public static final int new_recipe=0x7f060003;
         public static final int next=0x7f06000f;
+        public static final int no_email_handler=0x7f060036;
+        public static final int no_file_handler=0x7f060037;
         public static final int plus_sign=0x7f060010;
         public static final int recipes_imported=0x7f06001e;
         public static final int replace=0x7f06001d;

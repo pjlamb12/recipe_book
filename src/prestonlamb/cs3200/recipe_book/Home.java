@@ -14,6 +14,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -140,7 +142,13 @@ public class Home extends Activity {
 			emailIntent.putExtra(Intent.EXTRA_TEXT, body);
 			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
 			emailIntent.setType("plain/text");
-			startActivity(Intent.createChooser(emailIntent, hint));			
+			PackageManager manager = getApplicationContext().getPackageManager();
+			List<ResolveInfo> list = manager.queryIntentActivities(emailIntent, 0);
+			if(list != null && list.size() > 0){
+				startActivity(Intent.createChooser(emailIntent, hint));							
+			} else {
+				Toast.makeText(getApplicationContext(), R.string.no_email_handler, Toast.LENGTH_LONG).show();
+			}
 		}
 		
 	}
@@ -273,6 +281,13 @@ public class Home extends Activity {
 	public void importDatabase(View v){
 		Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
 		fileIntent.setType("file/*");
-		startActivityForResult(Intent.createChooser(fileIntent, "Select database..."), IMPORT_DB_REQUEST);
+		PackageManager manager = getApplicationContext().getPackageManager();
+		List<ResolveInfo> list = manager.queryIntentActivities(fileIntent, 0);
+		if(list != null && list.size() > 0){
+			startActivityForResult(Intent.createChooser(fileIntent, "Select database..."), IMPORT_DB_REQUEST);			
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.no_file_handler, Toast.LENGTH_LONG).show();
+		}
+
 	}
 }

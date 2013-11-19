@@ -55,5 +55,7 @@
     <string name="email_recipes">Email Recipes</string>
     <string name="error_opening_file">There was an error opening the file. Make sure you selected the recipes.db file that was previously exported from this app.</string>
     <string name="email_database">Email Database</string>
+    <string name="no_email_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have an email client installed.</string>
+    <string name="no_file_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have a file explorer app installed.</string>
 
 </resources>

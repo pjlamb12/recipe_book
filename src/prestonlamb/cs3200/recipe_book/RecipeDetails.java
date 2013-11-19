@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -111,7 +114,13 @@ public class RecipeDetails extends Activity {
 		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null));
 		emailIntent.putExtra(Intent.EXTRA_SUBJECT, recipe.getRecipeName());
 		emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody.toString());
-		startActivity(Intent.createChooser(emailIntent, "Email recipe..."));
+		PackageManager manager = getApplicationContext().getPackageManager();
+		List<ResolveInfo> list = manager.queryIntentActivities(emailIntent, 0);
+		if(list != null && list.size() > 0){
+			startActivity(Intent.createChooser(emailIntent, "Email recipe..."));							
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.no_email_handler, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public void exportAsText(){
