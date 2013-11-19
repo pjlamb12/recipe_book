@@ -1,5 +1,8 @@
 package prestonlamb.cs3200.recipe_book;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.app.Activity;
@@ -75,8 +78,11 @@ public class AddDirections extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String editedDirection = editInput.getText().toString();
-				recipe.deleteSingleDirection(listItem);
-				recipe.addSingleDirection(editedDirection);
+				List<String> allDirections = new ArrayList<String>();
+				allDirections = recipe.getAllDirections();
+				allDirections.remove(listItem);
+				allDirections.add(listItem, editedDirection);
+				recipe.setDirections(allDirections);
 				adptr.notifyDataSetChanged();
 				dialog.dismiss();
 			}

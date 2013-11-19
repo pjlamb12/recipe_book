@@ -1,11 +1,16 @@
 package prestonlamb.cs3200.recipe_book;
 
-import android.os.Bundle;
-import android.os.Parcelable;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.NavUtils;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +20,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
-import android.text.InputType;
 
 public class AddIngredients extends Activity {
 
@@ -75,8 +78,11 @@ public class AddIngredients extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				String editedIngredient = editInput.getText().toString();
-				recipe.deleteSingleIngredient(listItem);
-				recipe.addSingleIngredient(editedIngredient);
+				List<String> allIngredients = new ArrayList<String>();
+				allIngredients = recipe.getAllIngredients();
+				allIngredients.remove(listItem);
+				allIngredients.add(listItem, editedIngredient);
+				recipe.setAllIngredients(allIngredients);
 				adptr.notifyDataSetChanged();
 				dialog.dismiss();
 			}
