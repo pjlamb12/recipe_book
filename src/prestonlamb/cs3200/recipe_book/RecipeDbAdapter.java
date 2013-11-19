@@ -112,6 +112,12 @@ public class RecipeDbAdapter {
 		Log.d(ADPTR_LOGTAG, "Inserted recipe record: " + insertedRowIndex);
 		return insertedRowIndex;
 	}
+
+	
+	static final String DELETE_ALL_ROWS = "DELETE FROM " + RECIPE_TABLE;
+	public void deleteAllRecipes(){
+		db.delete(RECIPE_TABLE, null, null);
+	}
 	
 	private String escapeString(List<String> list){
 		StringBuilder sb = new StringBuilder();

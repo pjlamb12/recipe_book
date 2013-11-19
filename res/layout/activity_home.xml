@@ -21,9 +21,15 @@
         android:onClick="viewRecipes" />
 
     <Button
-        android:id="@+id/export_recipes"
+        android:id="@+id/export_database"
         style="@style/buttonStyle"
         android:text="@string/export_database"
-        android:onClick="exportRecipes" />
+        android:onClick="exportDatabase" />
+
+    <Button
+        android:id="@+id/import_database"
+        style="@style/buttonStyle"
+        android:text="@string/import_database"
+        android:onClick="importDatabase" />
 
 </LinearLayout>

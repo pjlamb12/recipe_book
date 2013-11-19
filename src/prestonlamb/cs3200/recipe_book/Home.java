@@ -1,13 +1,19 @@
 package prestonlamb.cs3200.recipe_book;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -23,6 +29,7 @@ public class Home extends Activity {
 	public static final int INGREDIENTS_REQUEST = 2;
 	public static final int DIRECTIONS_REQUEST = 3;
 	public static final int RECIPES_REQUEST = 4;
+	public static final int IMPORT_DB_REQUEST = 5;
 	public static final String RECIPE_LIST_INTENT = "RecipeList";
 	public static final String RECIPE_INTENT = "Recipe";
 	public static final String RECIPE_ID_INTENT = "RecipeId";
@@ -40,7 +47,7 @@ public class Home extends Activity {
 	
 	public void viewRecipes(View v){
 		Intent intent = new Intent(getApplicationContext(), ViewRecipes.class);
-		startActivity(intent);
+		startActivity(intent);		
 	}
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
@@ -63,6 +70,10 @@ public class Home extends Activity {
 					dbAdapter.close();
 				}
 			}
+		} else if(resultCode == -1 && requestCode == IMPORT_DB_REQUEST){
+			Uri uri = data.getData();
+			String filePath = uri.getPath().toString();
+			readObjectsFromFile(filePath);
 		}
 	}
 	
@@ -72,19 +83,93 @@ public class Home extends Activity {
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void readObjectsFromFile(String path){
+		try{
+			FileInputStream fileIn = new FileInputStream(path);
+			@SuppressWarnings("resource")
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+			recipeList = (ArrayList<Recipe>) in.readObject();
+			replaceDatabaseDialog(recipeList);
+		} catch (IOException e){
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void replaceDatabaseDialog(final ArrayList<Recipe> recipeList){
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.import_database_dialog_title);
+		builder.setMessage(R.string.import_database_dialog_desc);
+		builder.setPositiveButton(R.string.replace, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				replaceDatabase(recipeList);
+				dialog.dismiss();
+			}
+		});
+		builder.setNeutralButton(R.string.add_to, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				addToDatabase(recipeList);
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Do nothing on the cancel
+				dialog.cancel();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
+	public void replaceDatabase(ArrayList<Recipe> recipeList){
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		dbAdapter.open();
+		dbAdapter.deleteAllRecipes();
+		for(Recipe recipe : recipeList){
+			dbAdapter.insertRecipe(recipe);
+		}
+		dbAdapter.close();
+		Toast.makeText(getApplicationContext(), R.string.recipes_imported, Toast.LENGTH_LONG).show();
+	}
+	
+	public void addToDatabase(ArrayList<Recipe> recipeList){
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		dbAdapter.open();
+		for(Recipe recipe : recipeList){
+			dbAdapter.insertRecipe(recipe);
+		}
+		dbAdapter.close();
+		Toast.makeText(getApplicationContext(), R.string.recipes_imported, Toast.LENGTH_LONG).show();
+	}
 
-	public void exportRecipes(View v){
+
+	public void exportDatabase(View v){
 		try {
 			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db";
 			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.db");
 			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			RecipeDbAdapter dbAdapter = new RecipeDbAdapter(this);
+			if(dbAdapter == null){
+				dbAdapter = new RecipeDbAdapter(this);
+			}
 			dbAdapter.open();
 			List<Recipe> recipeList = dbAdapter.retrieveAllRecipes();
 			dbAdapter.close();
-			for(Recipe recipe : recipeList){
-				out.writeObject(recipe);
-			}
+			out.writeObject(recipeList);
 			out.close();
 			fileOut.close();
 			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
@@ -94,7 +179,9 @@ public class Home extends Activity {
 		
 	}
 	
-	public void importRecipes(){
-		
+	public void importDatabase(View v){
+		Intent fileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+		fileIntent.setType("file/*");
+		startActivityForResult(Intent.createChooser(fileIntent, "Select database..."), IMPORT_DB_REQUEST);
 	}
 }
