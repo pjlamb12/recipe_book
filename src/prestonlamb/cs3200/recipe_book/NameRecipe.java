@@ -118,8 +118,8 @@ public class NameRecipe extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-		if(resultCode == Home.RESULT_OK && requestCode == Home.INGREDIENTS_REQUEST){
-			setResult(Home.RESULT_OK, data);
+		if(resultCode == RESULT_OK && requestCode == Home.INGREDIENTS_REQUEST){
+			setResult(RESULT_OK, data);
 			finish();
 		}
 	}

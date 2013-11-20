@@ -149,7 +149,7 @@ public class AddDirections extends Activity {
 		Intent intent = new Intent();
 		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
-		setResult(Home.RESULT_OK, intent);
+		setResult(RESULT_OK, intent);
 		finish();
 	}
 
@@ -175,7 +175,7 @@ public class AddDirections extends Activity {
 		case android.R.id.home:
 //			Intent intent = NavUtils.getParentActivityIntent(this);
 //			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-//			setResult(Home.RESULT_OK);
+//			setResult(RESULT_OK);
 //			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}

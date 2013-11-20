@@ -172,7 +172,7 @@ public class AddIngredients extends Activity {
 		case android.R.id.home:
 //			Intent intent = NavUtils.getParentActivityIntent(this);
 //			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-//			setResult(Home.RESULT_OK);
+//			setResult(RESULT_OK);
 //			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
@@ -181,8 +181,8 @@ public class AddIngredients extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-		if(resultCode == Home.RESULT_OK && requestCode == Home.DIRECTIONS_REQUEST){
-			setResult(Home.RESULT_OK, data);
+		if(resultCode == RESULT_OK && requestCode == Home.DIRECTIONS_REQUEST){
+			setResult(RESULT_OK, data);
 			finish();
 		}
 	}

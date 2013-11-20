@@ -152,7 +152,7 @@ public class RecipeDetails extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-		if(resultCode == Home.RESULT_OK && requestCode == Home.NAME_REQUEST){
+		if(resultCode == RESULT_OK && requestCode == Home.NAME_REQUEST){
 			if(data.hasExtra(Home.RECIPE_INTENT));{
 				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
 				int recipe_id = data.getIntExtra(Home.RECIPE_ID_INTENT, -1);
@@ -171,7 +171,7 @@ public class RecipeDetails extends Activity {
 				}
 			}
 		}
-		setResult(ViewRecipes.DETAIL_REQUEST);
+		setResult(RESULT_OK);
 		finish();
 	}
 

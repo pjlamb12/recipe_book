@@ -27,9 +27,6 @@ import android.widget.Toast;
 public class Home extends Activity {
 
 	RecipeDbAdapter dbAdapter = null;
-	public static final int RESULT_BAD = 0;
-	public static final int RESULT_OK = 1;
-	public static final int RESULT_FILE = -1;
 	public static final int NAME_REQUEST = 1;
 	public static final int INGREDIENTS_REQUEST = 2;
 	public static final int DIRECTIONS_REQUEST = 3;
@@ -76,9 +73,9 @@ public class Home extends Activity {
 					Toast.makeText(getApplicationContext(), "Your recipe was successfully saved.", Toast.LENGTH_LONG).show();
 				}
 			}
-		}else if(resultCode == RESULT_BAD && requestCode == NAME_REQUEST){
+		}else if(resultCode == RESULT_CANCELED && requestCode == NAME_REQUEST){
 			Toast.makeText(getApplicationContext(), "An error occurred while saving your recipe", Toast.LENGTH_LONG).show();
-		}else if(resultCode == RESULT_FILE && requestCode == IMPORT_DB_REQUEST){
+		}else if(resultCode == RESULT_OK && requestCode == IMPORT_DB_REQUEST){
 			Uri uri = data.getData();
 			String filePath = uri.getPath().toString();
 			readObjectsFromFile(filePath);
