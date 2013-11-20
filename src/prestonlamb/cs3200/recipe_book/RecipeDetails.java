@@ -153,25 +153,10 @@ public class RecipeDetails extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == RESULT_OK && requestCode == Home.NAME_REQUEST){
-			if(data.hasExtra(Home.RECIPE_INTENT));{
-				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
-				int recipe_id = data.getIntExtra(Home.RECIPE_ID_INTENT, -1);
-				newRecipe.setId(recipe_id);
-				if(newRecipe != null){
-					if(dbAdapter == null){
-						dbAdapter = new RecipeDbAdapter(this);
-					}
-					dbAdapter.open();
-					if(newRecipe.getId() == -1){
-						dbAdapter.insertRecipe(newRecipe);						
-					}else{
-						dbAdapter.updateRecipeWhereID(newRecipe);
-					}
-					dbAdapter.close();
-				}
-			}
+			setResult(RESULT_OK);
+		} else {
+			setResult(RESULT_CANCELED);
 		}
-		setResult(RESULT_OK);
 		finish();
 	}
 

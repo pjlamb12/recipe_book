@@ -54,28 +54,7 @@ public class Home extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-		if(resultCode == RESULT_OK && requestCode == NAME_REQUEST){
-			if(data.hasExtra(Home.RECIPE_INTENT));{
-				Recipe newRecipe = data.getParcelableExtra(Home.RECIPE_INTENT);
-				int recipe_id = data.getIntExtra(RECIPE_ID_INTENT, -1);
-				newRecipe.setId(recipe_id);
-				if(newRecipe != null){
-					if(dbAdapter == null){
-						dbAdapter = new RecipeDbAdapter(this);
-					}
-					dbAdapter.open();
-					if(newRecipe.getId() == -1){
-						dbAdapter.insertRecipe(newRecipe);						
-					}else{
-						dbAdapter.updateRecipeWhereID(newRecipe);
-					}
-					dbAdapter.close();
-					Toast.makeText(getApplicationContext(), "Your recipe was successfully saved.", Toast.LENGTH_LONG).show();
-				}
-			}
-		}else if(resultCode == RESULT_CANCELED && requestCode == NAME_REQUEST){
-			Toast.makeText(getApplicationContext(), "An error occurred while saving your recipe", Toast.LENGTH_LONG).show();
-		}else if(resultCode == RESULT_OK && requestCode == IMPORT_DB_REQUEST){
+		if(resultCode == RESULT_OK && requestCode == IMPORT_DB_REQUEST){
 			Uri uri = data.getData();
 			String filePath = uri.getPath().toString();
 			readObjectsFromFile(filePath);

@@ -187,9 +187,7 @@ public class ViewRecipes extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putParcelableArrayListExtra(Home.RECIPE_LIST_INTENT, (ArrayList<? extends Parcelable>) recipeList);
-			NavUtils.navigateUpTo(this, intent);
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.export_recipes:
 			exportAllAsText();
@@ -232,8 +230,10 @@ public class ViewRecipes extends Activity {
 
 		if(resultCode == RESULT_OK && requestCode == DETAIL_REQUEST){
 			setRecipes();
-			adptr.notifyDataSetChanged();
+		} else {
+			setRecipes();			
 		}
+		adptr.notifyDataSetChanged();
 	}
 
 

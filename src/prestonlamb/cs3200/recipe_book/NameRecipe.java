@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-//import android.support.v4.app.NavUtils;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,7 +88,7 @@ public class NameRecipe extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
@@ -110,7 +110,7 @@ public class NameRecipe extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-//			NavUtils.navigateUpFromSameTask(this);
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -119,9 +119,11 @@ public class NameRecipe extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == RESULT_OK && requestCode == Home.INGREDIENTS_REQUEST){
-			setResult(RESULT_OK, data);
-			finish();
+			setResult(RESULT_OK);
+		} else {
+			setResult(RESULT_CANCELED);			
 		}
+		finish();
 	}
 
 

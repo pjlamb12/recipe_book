@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-//import android.support.v4.app.NavUtils;
+import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -155,7 +155,7 @@ public class AddIngredients extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
@@ -170,10 +170,11 @@ public class AddIngredients extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-//			Intent intent = NavUtils.getParentActivityIntent(this);
-//			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-//			setResult(RESULT_OK);
-//			NavUtils.navigateUpTo(this, intent);
+			Intent intent = NavUtils.getParentActivityIntent(this);
+			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
+			setResult(RESULT_OK);
+			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -182,9 +183,11 @@ public class AddIngredients extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
 		if(resultCode == RESULT_OK && requestCode == Home.DIRECTIONS_REQUEST){
-			setResult(RESULT_OK, data);
-			finish();
+			setResult(RESULT_OK);
+		} else{
+			setResult(RESULT_CANCELED);
 		}
+		finish();
 	}
 
 

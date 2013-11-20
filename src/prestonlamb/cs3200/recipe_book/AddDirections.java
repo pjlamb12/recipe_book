@@ -3,23 +3,23 @@ package prestonlamb.cs3200.recipe_book;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
-import android.os.Parcelable;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.NavUtils;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
-//import android.support.v4.app.NavUtils;
-import android.text.InputType;
 
 public class AddDirections extends Activity {
 
@@ -146,10 +146,16 @@ public class AddDirections extends Activity {
 	}
 	
 	public void finish(View v){
-		Intent intent = new Intent();
-		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
-		setResult(RESULT_OK, intent);
+		RecipeDbAdapter dbAdapter = new RecipeDbAdapter(this);
+		dbAdapter.open();
+		if(recipe.getId() == -1){
+			dbAdapter.insertRecipe(recipe);						
+		}else{
+			dbAdapter.updateRecipeWhereID(recipe);
+		}
+		dbAdapter.close();
+		Toast.makeText(getApplicationContext(), "Your recipe was successfully saved.", Toast.LENGTH_LONG).show();
+		setResult(RESULT_OK);
 		finish();
 	}
 
@@ -158,7 +164,7 @@ public class AddDirections extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(false);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 	}
 
@@ -173,10 +179,11 @@ public class AddDirections extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-//			Intent intent = NavUtils.getParentActivityIntent(this);
-//			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-//			setResult(RESULT_OK);
-//			NavUtils.navigateUpTo(this, intent);
+			Intent intent = NavUtils.getParentActivityIntent(this);
+			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+			intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
+			setResult(RESULT_OK);
+			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
