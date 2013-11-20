@@ -18,7 +18,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+//import android.support.v4.app.NavUtils;
 import android.text.InputType;
 
 public class AddDirections extends Activity {
@@ -146,7 +146,7 @@ public class AddDirections extends Activity {
 	}
 	
 	public void finish(View v){
-		Intent intent = new Intent(getApplicationContext(), Home.class);
+		Intent intent = new Intent();
 		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
 		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
 		setResult(Home.RESULT_OK, intent);
@@ -158,7 +158,7 @@ public class AddDirections extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 	}
 
@@ -173,9 +173,10 @@ public class AddDirections extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-			NavUtils.navigateUpTo(this, intent);
+//			Intent intent = NavUtils.getParentActivityIntent(this);
+//			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+//			setResult(Home.RESULT_OK);
+//			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

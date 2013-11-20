@@ -9,7 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.app.NavUtils;
+//import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -155,7 +155,7 @@ public class AddIngredients extends Activity {
 	 */
 	private void setupActionBar() {
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(false);
 
 	}
 
@@ -170,9 +170,10 @@ public class AddIngredients extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent intent = NavUtils.getParentActivityIntent(this);
-			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
-			NavUtils.navigateUpTo(this, intent);
+//			Intent intent = NavUtils.getParentActivityIntent(this);
+//			intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+//			setResult(Home.RESULT_OK);
+//			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
