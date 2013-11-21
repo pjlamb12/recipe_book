@@ -52,6 +52,9 @@
     <string name="delete_recipe_dialog_title">Delete Recipe</string>
     <string name="update_recipe">Update Recipe</string>
     <string name="email_recipe">Email Recipe</string>
+    <string name="email_recipe_desc">How would you like to send this email?</string>
+    <string name="email_as_db">As a Database</string>
+    <string name="email_as_text">As Text</string>
     <string name="email_recipes">Email Recipes</string>
     <string name="error_opening_file">There was an error opening the file. Make sure you selected the recipes.db file that was previously exported from this app.</string>
     <string name="email_database">Email Database</string>

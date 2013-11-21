@@ -3,10 +3,14 @@ package prestonlamb.cs3200.recipe_book;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -101,27 +105,107 @@ public class RecipeDetails extends Activity {
 	}
 	
 	public void emailRecipe(){
-		StringBuffer emailBody = new StringBuffer();
-		emailBody.append("Ingredients\n\n");
-		for(String ingredient : recipe.getAllIngredients()){
-			emailBody.append(ingredient + "\n");
-		}
-		emailBody.append("\nDirections\n\n");
-		for(String direction : recipe.getAllDirections()){
-			emailBody.append(direction + "\n");
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.email_recipe);
+		builder.setMessage(R.string.email_recipe_desc);
+		builder.setPositiveButton(R.string.email_as_db, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String fileName = "recipes.db";
+				String path = makeDbFile(fileName);
+				sendEmail(path, "Add this to your Recipe Book!", "Here, add this to your recipe book by importing it in the Recipe Book app!", "Send email...");
+				dialog.dismiss();
+			}
+		});
+		builder.setNeutralButton(R.string.email_as_text, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				String fileName = "recipes.txt";
+				String path = makeDbFile(fileName);
+				sendEmail(path, "Here's the recipe", "Here's the recipe you asked me for. Enjoy!", "Send email...");
+				dialog.dismiss();
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+//				Do nothing on the cancel
+				dialog.cancel();
+			}
+		});
+		AlertDialog alert = builder.create();
+		alert.show();
+
+	}
+		
+	public String makeDbFile(String fileName){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			List<Recipe> recipeList = new ArrayList<Recipe>();
+			recipeList.add(recipe);
+			out.writeObject(recipeList);
+			out.close();
+			fileOut.close();
+			return Environment.getExternalStorageDirectory().toString() + File.separator + fileName;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
 		}
 		
-		Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "", null));
-		emailIntent.putExtra(Intent.EXTRA_SUBJECT, recipe.getRecipeName());
-		emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody.toString());
-		PackageManager manager = getApplicationContext().getPackageManager();
-		List<ResolveInfo> list = manager.queryIntentActivities(emailIntent, 0);
-		if(list != null && list.size() > 0){
-			startActivity(Intent.createChooser(emailIntent, "Email recipe..."));							
-		} else {
-			Toast.makeText(getApplicationContext(), R.string.no_email_handler, Toast.LENGTH_LONG).show();
+	}
+	
+	public String makeTextFile(String fileName){
+		try {
+			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + fileName);
+			@SuppressWarnings("resource")
+			PrintStream out = new PrintStream(fileOut);
+			
+			StringBuffer recipeOut = new StringBuffer();
+			recipeOut.append(recipe.getRecipeName() + "\n\n");
+			recipeOut.append("Ingredients\n\n");
+			for(String ingredient : recipe.getAllIngredients()){
+				recipeOut.append(ingredient + "\n");
+			}
+			recipeOut.append("\nDirections\n\n");
+			for(String direction : recipe.getAllDirections()){
+				recipeOut.append(direction + "\n");
+			}
+			recipeOut.append("\n\n\n\n\n");
+			
+			out.print(recipeOut.toString());
+			return Environment.getExternalStorageDirectory().toString() + File.separator + fileName;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
 		}
 	}
+	
+	public void sendEmail(String path, String subject, String body, String hint){
+		File file = new File(path);
+		if (!file.exists() || !file.canRead()){
+			Toast.makeText(getApplicationContext(), "Error attaching file", Toast.LENGTH_LONG).show();
+		} else{
+			Uri uri = Uri.parse("file://" + path);
+			Intent emailIntent = new Intent(Intent.ACTION_SEND, Uri.fromParts("mailto", "", null));
+			emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+			emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+			emailIntent.putExtra(Intent.EXTRA_STREAM, uri);
+			emailIntent.setType("plain/text");
+			PackageManager manager = getApplicationContext().getPackageManager();
+			List<ResolveInfo> list = manager.queryIntentActivities(emailIntent, 0);
+			if(list != null && list.size() > 0){
+				startActivity(Intent.createChooser(emailIntent, hint));							
+			} else {
+				Toast.makeText(getApplicationContext(), R.string.no_email_handler, Toast.LENGTH_LONG).show();
+			}
+		}
+		
+	}
+
 	
 	public void exportAsText(){
 		try {
@@ -150,13 +234,9 @@ public class RecipeDetails extends Activity {
 		}
 	}
 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-
-		if(resultCode == RESULT_OK && requestCode == Home.NAME_REQUEST){
-			setResult(RESULT_OK);
-		} else {
-			setResult(RESULT_CANCELED);
-		}
+		super.onActivityResult(requestCode, resultCode, data);
 		finish();
 	}
 

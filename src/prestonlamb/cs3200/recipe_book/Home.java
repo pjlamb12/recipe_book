@@ -58,6 +58,8 @@ public class Home extends Activity {
 			Uri uri = data.getData();
 			String filePath = uri.getPath().toString();
 			readObjectsFromFile(filePath);
+		} else if (requestCode == NAME_REQUEST){
+			
 		}
 	}
 	
@@ -213,6 +215,7 @@ public class Home extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				addToDatabase(recipeList);
+				dialog.dismiss();
 			}
 		});
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

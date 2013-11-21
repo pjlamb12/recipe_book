@@ -116,13 +116,9 @@ public class NameRecipe extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-
-		if(resultCode == RESULT_OK && requestCode == Home.INGREDIENTS_REQUEST){
-			setResult(RESULT_OK);
-		} else {
-			setResult(RESULT_CANCELED);			
-		}
+		super.onActivityResult(requestCode, resultCode, data);
 		finish();
 	}
 

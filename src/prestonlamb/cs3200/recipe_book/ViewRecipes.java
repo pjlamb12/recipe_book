@@ -228,12 +228,10 @@ public class ViewRecipes extends Activity {
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 
-		if(resultCode == RESULT_OK && requestCode == DETAIL_REQUEST){
+		if(requestCode == DETAIL_REQUEST){
 			setRecipes();
-		} else {
-			setRecipes();			
+			adptr.notifyDataSetChanged();
 		}
-		adptr.notifyDataSetChanged();
 	}
 
 
