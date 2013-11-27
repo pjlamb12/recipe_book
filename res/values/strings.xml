@@ -30,6 +30,7 @@
     <string name="import_database_dialog_title">Delete Direction</string>
     <string name="import_database_dialog_desc">Do you want to add to or replace your database?</string>
     <string name="add_to">Add To</string>
+    <string name="add">Add</string>
     <string name="replace">Replace</string>
     <string name="recipes_imported">Your recipes have been imported.</string>
     <string name="title_activity_add_directions">Add Directions</string>
@@ -60,5 +61,6 @@
     <string name="email_database">Email Database</string>
     <string name="no_email_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have an email client installed.</string>
     <string name="no_file_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have a file explorer app installed.</string>
+    <string name="voice_input">Voice input</string>
 
 </resources>

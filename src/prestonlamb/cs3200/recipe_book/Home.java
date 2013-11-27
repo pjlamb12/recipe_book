@@ -32,6 +32,7 @@ public class Home extends Activity {
 	public static final int DIRECTIONS_REQUEST = 3;
 	public static final int RECIPES_REQUEST = 4;
 	public static final int IMPORT_DB_REQUEST = 5;
+	public static final int SPEECH_REQUEST = 6;
 	public static final String RECIPE_LIST_INTENT = "RecipeList";
 	public static final String RECIPE_INTENT = "Recipe";
 	public static final String RECIPE_ID_INTENT = "RecipeId";

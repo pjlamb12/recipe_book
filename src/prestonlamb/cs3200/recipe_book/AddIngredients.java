@@ -7,8 +7,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.speech.RecognizerIntent;
 import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.view.Menu;
@@ -26,6 +29,7 @@ public class AddIngredients extends Activity {
 	Recipe recipe;
 	int recipe_id;
 	IngredientArrayAdapter adptr;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +67,20 @@ public class AddIngredients extends Activity {
 			
 		});
 		
+	}
+	
+	public void startVoiceInput(View v){
+		PackageManager manager = getPackageManager();
+		Intent voiceIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		List<ResolveInfo> activities = manager.queryIntentActivities(voiceIntent, 0);
+		if(activities.size() == 0){
+			
+		}else{
+			voiceIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+			voiceIntent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say Ingredient");
+			voiceIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
+			startActivityForResult(voiceIntent, Home.SPEECH_REQUEST);
+		}
 	}
 	
 	public void showEditIngredientDialog(final int listItem){
@@ -183,7 +201,18 @@ public class AddIngredients extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
-		finish();
+		if( requestCode == Home.SPEECH_REQUEST && resultCode == RESULT_OK){
+			ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			StringBuilder sb = new StringBuilder();
+			for(String match : matches){
+				sb.append(match);
+				sb.append(" ");
+			}
+			EditText enterIngredient = (EditText) findViewById(R.id.enter_ingredient);
+			enterIngredient.setText(sb.toString());
+		} else {
+			finish();			
+		}
 	}
 
 
