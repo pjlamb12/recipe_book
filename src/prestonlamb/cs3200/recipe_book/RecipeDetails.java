@@ -18,23 +18,28 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecipeDetails extends Activity {
+public class RecipeDetails extends Activity implements OnInitListener{
 
 	Recipe recipe = new Recipe();
 	int recipe_id;
 	RecipeDbAdapter dbAdapter = null;
+	TextToSpeech tts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_recipe_details);
 		// Show the Up button in the action bar.
+		
+		tts = new TextToSpeech(this, this);
 		setupActionBar();
 		Intent intent = getIntent();
 		recipe = intent.getParcelableExtra(Home.RECIPE_INTENT);
@@ -92,6 +97,9 @@ public class RecipeDetails extends Activity {
 			return true;
 		case R.id.export_text:
 			exportAsText();
+			return true;
+		case R.id.read_recipe:
+			speakRecipe();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -238,6 +246,33 @@ public class RecipeDetails extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		super.onActivityResult(requestCode, resultCode, data);
 		finish();
+	}
+
+	@Override
+	public void onInit(int status) {
+//		if (status == TextToSpeech.SUCCESS){
+//			int result = tts.setLanguage(Locale.US);
+//			
+//			if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+//				Toast.makeText(this, "This language is not supported", Toast.LENGTH_LONG).show();
+//			} else {
+//				speakRecipe();
+//			}
+//		} else {
+//			Toast.makeText(this, "Can't perform text to speech", Toast.LENGTH_LONG).show();
+//		}
+	}
+	
+	private void speakRecipe(){
+		tts.speak(recipe.getRecipeName(), TextToSpeech.QUEUE_FLUSH, null);
+		tts.speak("Ingredients", TextToSpeech.QUEUE_ADD, null);
+		for(String ingr : recipe.getAllIngredients()){
+			tts.speak(ingr, TextToSpeech.QUEUE_ADD, null);
+		}
+		tts.speak("Directions", TextToSpeech.QUEUE_ADD, null);
+		for(String dir : recipe.getAllDirections()){
+			tts.speak(dir, TextToSpeech.QUEUE_ADD, null);
+		}
 	}
 
 }

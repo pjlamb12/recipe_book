@@ -62,5 +62,6 @@
     <string name="no_email_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have an email client installed.</string>
     <string name="no_file_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have a file explorer app installed.</string>
     <string name="voice_input">Voice input</string>
+    <string name="read_recipe">Read Recipe</string>
 
 </resources>

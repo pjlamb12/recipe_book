@@ -46,7 +46,7 @@ public final class R {
         public static final int enter_name=0x7f09000e;
         public static final int entree_radio=0x7f090011;
         public static final int export_database=0x7f09000c;
-        public static final int export_recipes=0x7f090026;
+        public static final int export_recipes=0x7f090027;
         public static final int export_text=0x7f090025;
         public static final int filter_spinner=0x7f09001c;
         public static final int finish=0x7f090004;
@@ -58,6 +58,7 @@ public final class R {
         public static final int new_recipe=0x7f09000a;
         public static final int nextIngredients=0x7f090014;
         public static final int next_directions=0x7f090008;
+        public static final int read_recipe=0x7f090026;
         public static final int recipe_list=0x7f09001d;
         public static final int recipe_name_list=0x7f09001f;
         public static final int recipe_name_view=0x7f090017;
@@ -137,6 +138,7 @@ public final class R {
         public static final int no_email_handler=0x7f06003a;
         public static final int no_file_handler=0x7f06003b;
         public static final int plus_sign=0x7f060010;
+        public static final int read_recipe=0x7f06003d;
         public static final int recipes_imported=0x7f06001f;
         public static final int replace=0x7f06001e;
         public static final int soup_radio=0x7f06002a;
