@@ -40,6 +40,7 @@
         android:id="@+id/nextIngredients"
         android:onClick="nextIngredients"
         style="@style/buttonStyle"
-        android:text="@string/next"/>
+        android:text="@string/next"
+        android:drawableRight="@drawable/ic_action_forward"/>
     
 </LinearLayout>

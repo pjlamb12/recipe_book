@@ -20,16 +20,17 @@
             android:onClick="startVoiceInput"
             android:src="@drawable/ic_action_microphone" />
         		
-		    <Button
-		        android:id="@+id/add_direction"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_weight=".5"
-		        android:text="@string/add"
-		        android:textStyle="bold"
-          		android:layout_marginLeft="5sp"
-		        android:onClick="addDirection"
-		        style="@style/smallButtonStyle" />
+	    <ImageButton
+	        android:id="@+id/add_direction"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight=".5"
+	        android:src="@drawable/ic_action_new"
+	        android:contentDescription="@string/add"
+	        android:textStyle="bold"
+         		android:layout_marginLeft="5sp"
+	        android:onClick="addDirection"
+	        style="@style/smallButtonStyle" />
 		
     </LinearLayout>
 

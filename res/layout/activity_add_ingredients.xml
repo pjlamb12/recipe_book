@@ -20,7 +20,7 @@
             android:onClick="startVoiceInput"
             android:src="@drawable/ic_action_microphone" />
 
-        <Button
+        <ImageButton
             android:id="@+id/add_ingredient"
             style="@style/smallButtonStyle"
             android:layout_width="wrap_content"
@@ -28,7 +28,8 @@
             android:layout_marginLeft="5sp"
             android:layout_weight=".5"
             android:onClick="addIngredient"
-            android:text="@string/add"
+            android:src="@drawable/ic_action_new"
+            android:contentDescription="@string/add"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -52,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:onClick="nextDirections"
-        android:text="@string/next" />
+        android:text="@string/next" 
+        android:drawableRight="@drawable/ic_action_forward" />
 
 </LinearLayout>
