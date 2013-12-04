@@ -33,7 +33,7 @@ public class RecipeDbAdapter {
 	public static final int RECIPE_INGREDIENTS_COL_NUM = 3;
 	public static final int RECIPE_DIRECTIONS_COL_NUM = 4;
 	
-	private static final String SEPARATOR = "}";
+	private static final String SEPARATOR = "////";
 	
 	private SQLiteDatabase db = null;
 	private RecipeDBOpenHelper dbHelper = null;
