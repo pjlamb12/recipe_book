@@ -3,59 +3,54 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <LinearLayout 
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/voice_enter"
             style="@style/smallButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="47dp"
             android:layout_marginRight="5sp"
-            android:layout_weight="0.47"
+            android:layout_weight="0.45"
             android:contentDescription="@string/voice_input"
             android:onClick="startVoiceInput"
             android:src="@drawable/ic_action_microphone" />
-        		
-	    <ImageButton
-	        android:id="@+id/add_direction"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight=".5"
-	        android:src="@drawable/ic_action_new"
-	        android:contentDescription="@string/add"
-	        android:textStyle="bold"
-         		android:layout_marginLeft="5sp"
-	        android:onClick="addDirection"
-	        style="@style/smallButtonStyle" />
-		
+
+        <ImageButton
+            android:id="@+id/add_direction"
+            style="@style/smallButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5sp"
+            android:layout_weight="0.48"
+            android:contentDescription="@string/add"
+            android:onClick="addDirection"
+            android:src="@drawable/ic_action_new"
+            android:textStyle="bold" />
     </LinearLayout>
 
-   	<EditText 
+    <EditText
         android:id="@+id/enter_direction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences"
-        android:hint="@string/direction_hint"/>
-    
-    
+        android:hint="@string/direction_hint"
+        android:inputType="textCapSentences" />
+
     <ListView
         android:id="@+id/direcion_list"
         android:layout_width="match_parent"
-        android:layout_height="280dp" 
-        android:layout_marginBottom="15dp">
-		    
+        android:layout_height="280dp"
+        android:layout_marginBottom="15dp" >
     </ListView>
 
     <Button
         android:id="@+id/finish"
         style="@style/buttonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="@string/finish" 
-        android:onClick="finish"/>
+        android:onClick="finish"
+        android:text="@string/finish" />
 
 </LinearLayout>

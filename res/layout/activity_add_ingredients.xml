@@ -13,9 +13,9 @@
             android:id="@+id/voice_enter"
             style="@style/smallButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_marginRight="5sp"
-            android:layout_weight="0.47"
+            android:layout_weight="0.45"
             android:contentDescription="@string/voice_input"
             android:onClick="startVoiceInput"
             android:src="@drawable/ic_action_microphone" />
@@ -24,12 +24,12 @@
             android:id="@+id/add_ingredient"
             style="@style/smallButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5sp"
-            android:layout_weight=".5"
+            android:layout_weight="0.48"
+            android:contentDescription="@string/add"
             android:onClick="addIngredient"
             android:src="@drawable/ic_action_new"
-            android:contentDescription="@string/add"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -50,10 +50,8 @@
     <Button
         android:id="@+id/next_directions"
         style="@style/buttonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:drawableRight="@drawable/ic_action_forward"
         android:onClick="nextDirections"
-        android:text="@string/next" 
-        android:drawableRight="@drawable/ic_action_forward" />
+        android:text="@string/next" />
 
 </LinearLayout>
