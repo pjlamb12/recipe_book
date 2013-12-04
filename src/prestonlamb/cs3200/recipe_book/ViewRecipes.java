@@ -197,32 +197,39 @@ public class ViewRecipes extends Activity {
 	}
 	
 	public void exportAllAsText(){
-		try {
-			String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt";
-			FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt");
-			PrintStream out = new PrintStream(fileOut);
-			
-			for(Recipe recipe : recipeList){
-				StringBuffer recipeOut = new StringBuffer();
-				recipeOut.append(recipe.getRecipeName() + "\n\n");
-				recipeOut.append("Ingredients\n\n");
-				for(String ingredient : recipe.getAllIngredients()){
-					recipeOut.append(ingredient + "\n");
-				}
-				recipeOut.append("\nDirections\n\n");
-				for(String direction : recipe.getAllDirections()){
-					recipeOut.append(direction + "\n");
-				}
-				recipeOut.append("\n\n\n\n\n");
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(getApplicationContext());
+		}
+		if(dbAdapter.recipesAvailable()){
+			try {
+				String destination = Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt";
+				FileOutputStream fileOut = new FileOutputStream(Environment.getExternalStorageDirectory().toString() + File.separator + "recipes.txt");
+				PrintStream out = new PrintStream(fileOut);
 				
-				out.print(recipeOut.toString());				
-			}
-			
-			out.close();
-			fileOut.close();
-			Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
-		} catch (IOException e) {
-			e.printStackTrace();
+				for(Recipe recipe : recipeList){
+					StringBuffer recipeOut = new StringBuffer();
+					recipeOut.append(recipe.getRecipeName() + "\n\n");
+					recipeOut.append("Ingredients\n\n");
+					for(String ingredient : recipe.getAllIngredients()){
+						recipeOut.append(ingredient + "\n");
+					}
+					recipeOut.append("\nDirections\n\n");
+					for(String direction : recipe.getAllDirections()){
+						recipeOut.append(direction + "\n");
+					}
+					recipeOut.append("\n\n\n\n\n");
+					
+					out.print(recipeOut.toString());				
+				}
+				
+				out.close();
+				fileOut.close();
+				Toast.makeText(this, "File written out to " + destination, Toast.LENGTH_LONG).show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}			
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.need_recipes, Toast.LENGTH_LONG).show();
 		}
 	}
 	
