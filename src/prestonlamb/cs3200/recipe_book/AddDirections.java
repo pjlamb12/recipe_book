@@ -206,6 +206,17 @@ public class AddDirections extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	@Override
+	public void onBackPressed(){
+		super.onBackPressed();
+		Intent intent = NavUtils.getParentActivityIntent(this);
+		intent.putExtra(Home.RECIPE_INTENT, (Parcelable)recipe);
+		intent.putExtra(Home.RECIPE_ID_INTENT, recipe.getId());
+		setResult(RESULT_OK);
+		NavUtils.navigateUpTo(this, intent);
+	}
+
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
