@@ -288,4 +288,19 @@ public class RecipeDbAdapter {
 		int count = cursor.getCount();
 		return count;
 	}
+	
+	public boolean recipesAvailable(){
+		SQLiteDatabase db = this.getReadableDatabase();
+		Log.d(ADPTR_LOGTAG, "GET_ALL_RECIPES_QUERY Readable DB opened");
+		
+		Cursor cursor = db.query(RECIPE_TABLE, null, null, null, null, null, null);
+		int count = cursor.getCount();
+		
+		if(count > 0){
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 }

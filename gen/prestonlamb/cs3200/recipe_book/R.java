@@ -135,6 +135,7 @@ public final class R {
         public static final int ingredients=0x7f06002e;
         public static final int name_hint=0x7f060023;
         public static final int name_required=0x7f060024;
+        public static final int need_recipes=0x7f06003e;
         public static final int new_recipe=0x7f060003;
         public static final int next=0x7f06000f;
         public static final int no_email_handler=0x7f06003a;

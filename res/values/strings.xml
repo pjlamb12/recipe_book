@@ -63,5 +63,6 @@
     <string name="no_file_handler">Sorry, you don\'t have any applications that can handle this action. Make sure you have a file explorer app installed.</string>
     <string name="voice_input">Voice input</string>
     <string name="read_recipe">Read Recipe</string>
+    <string name="need_recipes">You must have some saved recipes to do that! Create some recipes first, then try again.</string>
 
 </resources>

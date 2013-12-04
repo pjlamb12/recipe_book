@@ -85,12 +85,19 @@ public class Home extends Activity {
 	}
 	
 	public void emailDatabase(){
-		String fileName = "recipes.db";
-		String path = makeDbFile(fileName);
-		String subject = "Here's my Recipe Book Database";
-		String body = "Here's my Recipe Book Database. I hope you like the recipes!";
-		String hint = "Email recipe database...";
-		sendEmail(path, subject, body, hint);
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		if(dbAdapter.recipesAvailable()){
+			String fileName = "recipes.db";
+			String path = makeDbFile(fileName);
+			String subject = "Here's my Recipe Book Database";
+			String body = "Here's my Recipe Book Database. I hope you like the recipes!";
+			String hint = "Email recipe database...";
+			sendEmail(path, subject, body, hint);			
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.need_recipes, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public String makeDbFile(String fileName){
@@ -172,12 +179,19 @@ public class Home extends Activity {
 	}
 	
 	public void emailRecipes(){
-		String fileName = "recipes.txt";
-		String path = makeTextFile(fileName);
-		String subject = "My Recipe Book";
-		String body = "Here's my Recipe Book. Hope you like them!";
-		String hint = "Email Recipe Book...";
-		sendEmail(path, subject, body, hint);
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		if(dbAdapter.recipesAvailable()){
+			String fileName = "recipes.txt";
+			String path = makeTextFile(fileName);
+			String subject = "My Recipe Book";
+			String body = "Here's my Recipe Book. Hope you like them!";
+			String hint = "Email Recipe Book...";
+			sendEmail(path, subject, body, hint);
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.need_recipes, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -257,9 +271,16 @@ public class Home extends Activity {
 	}
 
 	public void exportDatabase(View v){
-		String fileName = "recipes.db";
-		String path = makeDbFile(fileName);
-		Toast.makeText(this, "File written out to " + path, Toast.LENGTH_LONG).show();
+		if(dbAdapter == null){
+			dbAdapter = new RecipeDbAdapter(this);
+		}
+		if(dbAdapter.recipesAvailable()){
+			String fileName = "recipes.db";
+			String path = makeDbFile(fileName);
+			Toast.makeText(this, "File written out to " + path, Toast.LENGTH_LONG).show();
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.need_recipes, Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	public void importDatabase(View v){
