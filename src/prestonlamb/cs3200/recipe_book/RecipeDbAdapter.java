@@ -33,6 +33,8 @@ public class RecipeDbAdapter {
 	public static final int RECIPE_INGREDIENTS_COL_NUM = 3;
 	public static final int RECIPE_DIRECTIONS_COL_NUM = 4;
 	
+	private static final String SEPARATOR = "}";
+	
 	private SQLiteDatabase db = null;
 	private RecipeDBOpenHelper dbHelper = null;
 	
@@ -123,13 +125,13 @@ public class RecipeDbAdapter {
 		StringBuilder sb = new StringBuilder();
 		for(String item : list){
 			sb.append(item);
-			sb.append("/");
+			sb.append(SEPARATOR);
 		}
 		return sb.toString();
 	}
 	
 	private ArrayList<String> unescapeString(String fullString){
-		String[] parts = fullString.split("/");
+		String[] parts = fullString.split(SEPARATOR);
 		ArrayList<String> list = new ArrayList<String>();
 		for(String part : parts){
 			list.add(part);
