@@ -64,7 +64,7 @@ public class ViewRecipes extends Activity {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long itemId) {
 				showDeletionDialog(position);					
-				return false;
+				return true;
 			}
 		});
 		

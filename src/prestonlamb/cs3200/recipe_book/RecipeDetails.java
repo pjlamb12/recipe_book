@@ -122,7 +122,7 @@ public class RecipeDetails extends Activity implements OnInitListener{
 			public void onClick(DialogInterface dialog, int which) {
 				String fileName = "recipes.db";
 				String path = makeDbFile(fileName);
-				sendEmail(path, "Add this to your Recipe Book!", "Here, add this to your recipe book by importing it in the Recipe Book app!", "Send email...");
+				sendEmail(path, "Add " + recipe.getRecipeName() + " to your Recipe Book!", "Here, add " + recipe.getRecipeName() + " to your recipe book by importing it in the Recipe Book app!", "Send email...");
 				dialog.dismiss();
 			}
 		});
@@ -132,7 +132,7 @@ public class RecipeDetails extends Activity implements OnInitListener{
 			public void onClick(DialogInterface dialog, int which) {
 				String fileName = "recipes.txt";
 				String path = makeDbFile(fileName);
-				sendEmail(path, "Here's the recipe", "Here's the recipe you asked me for. Enjoy!", "Send email...");
+				sendEmail(path, "Here's the " + recipe.getRecipeName() + " recipe", "Here's the " + recipe.getRecipeName() + " recipe you asked me for. Enjoy!", "Send email...");
 				dialog.dismiss();
 			}
 		});
@@ -250,17 +250,7 @@ public class RecipeDetails extends Activity implements OnInitListener{
 
 	@Override
 	public void onInit(int status) {
-//		if (status == TextToSpeech.SUCCESS){
-//			int result = tts.setLanguage(Locale.US);
-//			
-//			if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
-//				Toast.makeText(this, "This language is not supported", Toast.LENGTH_LONG).show();
-//			} else {
-//				speakRecipe();
-//			}
-//		} else {
-//			Toast.makeText(this, "Can't perform text to speech", Toast.LENGTH_LONG).show();
-//		}
+//		Do nothing on the init for the TTS
 	}
 	
 	private void speakRecipe(){
